@@ -8,6 +8,7 @@ services:
     volumes:
       - ${NGINX_ROOT}/nginx.conf:/etc/nginx/nginx.conf:ro
       - ${NGINX_ROOT}/index.html:/www/root/index.html:ro
+    restart: always
     links:
       - sonarr
       - radarr

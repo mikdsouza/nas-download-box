@@ -6,3 +6,4 @@
 !nginx/
 !*.conf
 !*.html
+!*.md

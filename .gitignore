@@ -1,0 +1,8 @@
+*
+
+!.gitignore
+!*.yml
+!.env
+!nginx/
+!*.conf
+!*.html

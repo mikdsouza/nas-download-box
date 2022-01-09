@@ -1,6 +1,8 @@
 NAS Download Box
 ================
 
+I'm assuming here that you're pulling into `~/.config/dlbox/`
+
 ## If running in a VM
 
 Update the VM packages

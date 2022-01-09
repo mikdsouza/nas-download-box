@@ -5,10 +5,33 @@ I'm assuming here that you're pulling into `~/.config/dlbox/`
 
 ## If running in a VM
 
+Fix the hosts file. Edit `sudo vim /etc/hosts` and add the hostname to the end of the first line
+
 Update the VM packages
 
 ```
+$ sudo apt install curl wget apt-transport-https dirmngr git
 $ sudo apt update -y && sudo apt upgrade -y
+```
+
+Also fix the perms and the ssh keys
+```
+$ sudo chown admin ~
+$ sudo chown admin ~/.*
+$ ssh-keygen -t rsa
+```
+
+Transfer your ssh key with
+
+```
+ssh-copy-id admin@192.168.0.162
+```
+
+Fix the legacy iptables thing
+
+```
+sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 ```
 
 Restart. Then install docker following [https://docs.docker.com/engine/install/debian/].
@@ -39,6 +62,12 @@ docker-compose up -d
 ```
 
 This should come up at start up if docker is configured to start at startup.
+
+Fix some file permissions with
+
+```
+sudo chown -R admin:docker ~/share
+```
 
 ## If running directly on the NAS
 

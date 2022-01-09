@@ -1,6 +1,8 @@
 NAS Download Box
 ================
 
+## If running in a VM
+
 Update the VM packages
 
 ```
@@ -35,3 +37,30 @@ docker-compose up -d
 ```
 
 This should come up at start up if docker is configured to start at startup.
+
+## If running directly on the NAS
+
+Install `docker-ce` from the store. Do not install Portainer, I can never get it to work properly.
+
+Edit the docker startup script at `/volume1/.@plugins/AppCentral/docker-ce/CONTROL/start-stop.sh`
+
+```
+# Located in /volume1/.@plugins/AppCentral/docker-ce/CONTROL/start-stop.sh
+# Add this under the "start" instructions
+
+echo "Kill myhttp to so nginx can take it over"
+/usr/bin/pkill /usr/sbin/myhttpd
+```
+
+The modify your .env file with
+
+```
+PUID=1003
+PGID=1000
+TZ=Australia/Sydney
+CONFIG_ROOT=/volume1/Docker/config
+MEDIA_ROOT=/volume1/Media
+NGINX_ROOT=/home/topfish/.config/dlbox/nginx
+```
+
+To figure out the PID, run `id deamon`

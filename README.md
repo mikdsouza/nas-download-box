@@ -77,6 +77,12 @@ Then add the following cronjob `sudo crontab -u admin -e`
 * * * * * /home/admin/.config/dlbox/fix_network.sh
 ```
 
+If it all goes to shit and now you can't access the container because it keeps restarting, you can always edit the FS directly at
+
+```
+/volume1/.@plugins/AppCentral/linux-center/containers/debian10-server/rootfs/home/admin
+```
+
 Finally, get everything going with
 
 ```

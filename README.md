@@ -55,6 +55,12 @@ iface eth0 inet static
     dns-nameservers 192.168.0.233 8.8.4.4
 ```
 
+Alternatively, set up a consistent mac address instead by editing `/volume1/.@plugins/AppCentral/linux-center/containers/debian10-server/net` to add
+
+```
+lxc.network.hwaddr=da:35:dc:8b:ab:66
+```
+
 Finally, get everything going with
 
 ```

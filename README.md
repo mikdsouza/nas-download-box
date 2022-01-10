@@ -61,6 +61,22 @@ Alternatively, set up a consistent mac address instead by editing `/volume1/.@pl
 lxc.network.hwaddr=da:35:dc:8b:ab:66
 ```
 
+Now this part is fucking dumb but for whatever reason, the eth0 interface stops working after a suspent. Only way to fix it seems to be to reboot it.
+There is a script called `fix_network.sh` which does a ping to the router at `192.168.0.1` and calls reboot if that doesn't work.
+
+To setup this cronjob, first allow the user to reboot without the need for `sudo`. Add this to the sudo file with `sudo visudo`
+
+```
+# Admin user group
+%admin  ALL=NOPASSWD: /sbin/halt, /sbin/reboot, /sbin/poweroff
+```
+
+Then add the following cronjob `sudo crontab -u admin -e`
+
+```
+* * * * * /home/admin/.config/dlbox/fix_network.sh
+```
+
 Finally, get everything going with
 
 ```

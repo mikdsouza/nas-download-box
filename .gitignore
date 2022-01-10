@@ -7,3 +7,4 @@
 !*.conf
 !*.html
 !*.md
+!*.sh

@@ -16,6 +16,7 @@ services:
       - bazarr
       - jackett
       - deluge
+      - vpn
   
   autoheal:
     container_name: autoheal

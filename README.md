@@ -83,20 +83,6 @@ If it all goes to shit and now you can't access the container because it keeps r
 /volume1/.@plugins/AppCentral/linux-center/containers/debian10-server/rootfs/home/admin
 ```
 
-Finally, get everything going with
-
-```
-docker-compose up -d
-```
-
-This should come up at start up if docker is configured to start at startup.
-
-Fix some file permissions with
-
-```
-sudo chown -R admin:docker ~/share
-```
-
 ## If running directly on the NAS
 
 Install `docker-ce` from the store. Do not install Portainer, I can never get it to work properly.
@@ -123,3 +109,44 @@ NGINX_ROOT=/home/topfish/.config/dlbox/nginx
 ```
 
 To figure out the PID, run `id deamon`
+
+## If installing OMV on the NAS
+
+You may need the network driver. Download it from [here](https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/rtl_nic/rtl8125a-3.fw). Then copy it into
+
+```
+cp rtl8125a-3.fw /lib/frimware/rtl_nic/
+ip link set enp3s0 up
+sudo dhclient
+```
+
+Set the network to startup by editting `/etc/network/interfaces`
+
+```
+auto enp3s0
+iface enp3s0 inet dhcp
+    ethernet-wol g
+```
+
+Fix the UEFI with
+
+```
+mkdir /boot/efi/EFI/boot
+cp /boot/efi/EFI/debian/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
+```
+
+## Running the stack
+
+Finally, get everything going with
+
+```
+docker-compose up -d
+```
+
+This should come up at start up if docker is configured to start at startup.
+
+Fix some file permissions with
+
+```
+sudo chown -R admin:docker ~/share
+```

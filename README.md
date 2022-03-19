@@ -135,6 +135,14 @@ mkdir /boot/efi/EFI/boot
 cp /boot/efi/EFI/debian/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
 ```
 
+Docker-compose on apt is not longer the latest. We can get the latest from pip. Do
+
+```
+sudo apt uninstall docker-compose
+```
+
+Then follow the instructions [here](https://docs.docker.com/compose/install/)
+
 ## Running the stack
 
 Finally, get everything going with

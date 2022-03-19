@@ -17,6 +17,7 @@ services:
       - jackett
       - deluge
       - vpn
+      - jellyfin
   
   autoheal:
     container_name: autoheal
@@ -140,3 +141,32 @@ services:
     volumes:
       - ${CONFIG_ROOT}/bazarr:/config # config files
       - ${MEDIA_ROOT}:/media
+  
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=${PUID} # default user id, defined in .env
+      - PGID=${PGID} # default group id, defined in .env
+      - TZ=${TZ} # timezone, defined in .env
+    volumes:
+      - ${CONFIG_ROOT}/jellyfin:/config
+      - ${MEDIA_ROOT}/TV Shows:/data/tvshows
+      - ${MEDIA_ROOT}/Movies:/data/movies
+      - ${MEDIA_ROOT}/Music:/data/music
+    group_add:
+      - 107
+      - 44
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    deploy:
+      resources:
+        limits:
+          memory: 2.5G
+    restart: unless-stopped

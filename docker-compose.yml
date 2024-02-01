@@ -104,3 +104,21 @@ services:
       - ${CONFIG_ROOT}/radarr:/config # config files
       - ${MEDIA_ROOT}:/media
 
+  kodi-db:
+    container_name: kodi-db
+    image: mysql
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      - MYSQL_USER=kodi
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql-kodi-password
+    secrets:
+      - mysql-kodi-password
+    volumes:
+      - ${CONFIG_ROOT}/kodi-db:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+secrets:
+  mysql-kodi-password:
+    file: mysql-kodi-password.txt

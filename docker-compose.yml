@@ -2,7 +2,7 @@ version: "3"
 services:
   proxy:
     container_name: proxy
-    image: 'jc21/nginx-proxy-manager:latest'
+    image: 'jc21/nginx-proxy-manager:2.10.4'
     restart: unless-stopped
     ports:
       - '80:80'
@@ -18,6 +18,7 @@ services:
       - jackett
       - deluge
       - static
+      - readarr
   
   static:
     container_name: static-host
@@ -103,22 +104,39 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${CONFIG_ROOT}/radarr:/config # config files
       - ${MEDIA_ROOT}:/media
+  
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=${PUID} # default user id, defined in .env
+      - PGID=${PGID} # default group id, defined in .env
+      - TZ=${TZ} # timezone, defined in .env
+    volumes:
+      - ${CONFIG_ROOT}/readarr:/config
+      - ${MEDIA_ROOT}:/media
+    ports:
+      - 8787:8787
+    restart: unless-stopped
 
   kodi-db:
     container_name: kodi-db
     image: mysql
     restart: always
     ports:
-      - 8080:8080
+      - 3306:3306
     environment:
       - MYSQL_USER=kodi
       - MYSQL_PASSWORD_FILE=/run/secrets/mysql-kodi-password
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-kodi-password
+      - MYSQL_DATABASE=db
     secrets:
       - mysql-kodi-password
     volumes:
       - ${CONFIG_ROOT}/kodi-db:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
 
+  
 secrets:
   mysql-kodi-password:
     file: mysql-kodi-password.txt

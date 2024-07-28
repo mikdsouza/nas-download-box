@@ -19,7 +19,8 @@ services:
       - deluge
       - static
       - readarr
-  
+      - jellyfin
+
   static:
     container_name: static-host
     build:
@@ -119,23 +120,6 @@ services:
       - 8787:8787
     restart: unless-stopped
 
-  kodi-db:
-    container_name: kodi-db
-    image: mysql
-    restart: always
-    ports:
-      - 3306:3306
-    environment:
-      - MYSQL_USER=kodi
-      - MYSQL_PASSWORD_FILE=/run/secrets/mysql-kodi-password
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-kodi-password
-      - MYSQL_DATABASE=db
-    secrets:
-      - mysql-kodi-password
-    volumes:
-      - ${CONFIG_ROOT}/kodi-db:/var/lib/mysql
-    command: --mysql-native-password=ON
-
   jellyfin:
     image: linuxserver/jellyfin
     container_name: jellyfin
@@ -161,7 +145,3 @@ services:
         limits:
           memory: 2.5G
     restart: unless-stopped
-  
-secrets:
-  mysql-kodi-password:
-    file: mysql-kodi-password.txt

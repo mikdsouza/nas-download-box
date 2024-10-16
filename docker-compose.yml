@@ -2,7 +2,7 @@ version: "3"
 services:
   proxy:
     container_name: proxy
-    image: 'jc21/nginx-proxy-manager:2.10.4'
+    image: 'jc21/nginx-proxy-manager'
     restart: unless-stopped
     ports:
       - '80:80'
@@ -20,6 +20,8 @@ services:
       - readarr
       - jellyfin
       - prowlarr
+      - calibre-web
+      - calibre
 
   static:
     container_name: static-host
@@ -116,6 +118,42 @@ services:
       - ${MEDIA_ROOT}:/media
     ports:
       - 8787:8787
+    restart: unless-stopped
+  
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=${PUID} # default user id, defined in .env
+      - PGID=${PGID} # default group id, defined in .env
+      - TZ=${TZ} # timezone, defined in .env
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - ${CONFIG_ROOT}/calibre-web:/config
+      - ${MEDIA_ROOT}:/media
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+  
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=${PUID} # default user id, defined in .env
+      - PGID=${PGID} # default group id, defined in .env
+      - TZ=${TZ} # timezone, defined in .env
+      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - SUBFOLDER=/calibre/
+      - NO_FULL
+    volumes:
+      - ${CONFIG_ROOT}/calibre:/config
+      - ${MEDIA_ROOT}:/media
+    ports:
+      - 8080:8080
+      - 8181:8181
+      - 8081:8081
     restart: unless-stopped
 
   jellyfin:

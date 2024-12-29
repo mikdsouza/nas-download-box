@@ -7,4 +7,7 @@
 !*.html
 !*.md
 !*.sh
-mysql-kodi-password.txt
+!static/
+static/*
+!static/dockerfile
+!static/index.html

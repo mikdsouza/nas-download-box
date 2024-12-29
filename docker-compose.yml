@@ -15,13 +15,13 @@ services:
       - sonarr
       - radarr
       - lidarr
-      - deluge
       - static
       - readarr
       - jellyfin
       - prowlarr
       - calibre-web
       - calibre
+      - rtorrent
 
   static:
     container_name: static-host
@@ -32,21 +32,32 @@ services:
       - ${STATIC_ROOT}:/home/static
     ports:
       - 3000:3000
-
-  deluge:
-    container_name: deluge
-    image: lscr.io/linuxserver/deluge
-    restart: always
+  
+  rtorrent:
+    image: crazymax/rtorrent-rutorrent:latest
+    container_name: rtorrent
     ports:
-      - 8112:8112
+      - 6881:6881/udp # RT DHT
+      - 7080:8080 # ruTorrent
+      - 9000:9000 # WebDAV
+      - 50000:50000 # RT Inc
+      - 9001:8000 # XMLRPC
     environment:
       - PUID=${PUID} # default user id, defined in .env
       - PGID=${PGID} # default group id, defined in .env
       - TZ=${TZ} # timezone, defined in .env
-      - DELUGE_LOGLEVEL=info
+      - REAL_IP_FROM=0.0.0.0/32
+      - REAL_IP_HEADER=X-Forwarded-For
     volumes:
-      - ${MEDIA_ROOT}/Downloads:/media/Downloads # downloads folder
-      - ${CONFIG_ROOT}/deluge:/config # config files
+      - ${CONFIG_ROOT}/rtorrent:/data
+      - ${MEDIA_ROOT}/Downloads:/downloads
+      - ./rut-passwd:/passwd/
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 32000
+        hard: 40000
+    restart: unless-stopped
   
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -75,6 +86,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${CONFIG_ROOT}/sonarr:/config # config files
       - ${MEDIA_ROOT}:/media
+    links:
+      - rtorrent
   
   lidarr:
     container_name: lidarr
@@ -90,6 +103,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${CONFIG_ROOT}/lidarr:/config # config files
       - ${MEDIA_ROOT}:/media
+    links:
+      - rtorrent
 
   radarr:
     container_name: radarr
@@ -105,6 +120,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${CONFIG_ROOT}/radarr:/config # config files
       - ${MEDIA_ROOT}:/media
+    links:
+      - rtorrent
   
   readarr:
     image: lscr.io/linuxserver/readarr:develop
@@ -118,6 +135,8 @@ services:
       - ${MEDIA_ROOT}:/media
     ports:
       - 8787:8787
+    links:
+      - rtorrent
     restart: unless-stopped
   
   calibre-web:

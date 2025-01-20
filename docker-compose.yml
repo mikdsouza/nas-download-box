@@ -6,7 +6,7 @@ services:
       - TZ=${TZ}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: --schedule "30 3 * * * *" --disable-containers static-host --cleanup
+    command: --schedule "0 0 3 * * *" --disable-containers static-host --cleanup
   
   proxy:
     container_name: proxy

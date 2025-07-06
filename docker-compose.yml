@@ -28,7 +28,6 @@ services:
       - jellyfin
       - prowlarr
       - calibre-web
-      - calibre
       - qbittorrent
 
   static:
@@ -155,6 +154,8 @@ services:
     restart: unless-stopped
   
   calibre:
+    profiles:
+      - donotstart
     image: lscr.io/linuxserver/calibre:latest
     container_name: calibre
     security_opt:

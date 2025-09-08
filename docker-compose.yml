@@ -24,11 +24,12 @@ services:
       - radarr
       - lidarr
       - static
-      - readarr
+      # - readarr
       - jellyfin
       - prowlarr
       - calibre-web
       - qbittorrent
+      - flaresolverr
 
   static:
     container_name: static-host
@@ -70,6 +71,21 @@ services:
     ports:
       - 9696:9696
     restart: always
+    links: 
+      - flaresolverr
+
+  flaresolverr:
+    # DockerHub mirror flaresolverr/flaresolverr:latest
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=Europe/London
+    ports:
+      - "${PORT:-8191}:8191"
+    restart: unless-stopped
 
   sonarr:
     container_name: sonarr
@@ -122,21 +138,21 @@ services:
     links:
       - qbittorrent
   
-  readarr:
-    image: lscr.io/linuxserver/readarr:develop
-    container_name: readarr
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-    volumes:
-      - ${CONFIG_ROOT}/readarr:/config
-      - ${MEDIA_ROOT}:/media
-    ports:
-      - 8787:8787
-    links:
-      - qbittorrent
-    restart: unless-stopped
+  # readarr:
+  #   image: lscr.io/linuxserver/readarr:develop
+  #   container_name: readarr
+  #   environment:
+  #     - PUID=${PUID} # default user id, defined in .env
+  #     - PGID=${PGID} # default group id, defined in .env
+  #     - TZ=${TZ} # timezone, defined in .env
+  #   volumes:
+  #     - ${CONFIG_ROOT}/readarr:/config
+  #     - ${MEDIA_ROOT}:/media
+  #   ports:
+  #     - 8787:8787
+  #   links:
+  #     - qbittorrent
+  #   restart: unless-stopped
   
   calibre-web:
     image: lscr.io/linuxserver/calibre-web:latest

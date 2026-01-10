@@ -30,6 +30,7 @@ services:
       - calibre-web
       - qbittorrent
       - flaresolverr
+      - unifi
 
   static:
     container_name: static-host
@@ -217,3 +218,58 @@ services:
         limits:
           memory: 2.5G
     restart: unless-stopped
+  
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG_ROOT}/mongo/data:/data/db
+      - ${CONFIG_ROOT}/mongo/init/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: nope
+      MONGO_USER: unifi
+      MONGO_PASS: unifi
+      MONGO_DBNAME: unifi
+      MONGO_AUTHSOURCE: admin
+
+  unifi:
+    image: linuxserver/unifi-network-application:latest
+    container_name: unifi
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: UTC
+
+      # MongoDB connection
+      MONGO_USER: unifi
+      MONGO_PASS: unifi
+      MONGO_HOST: mongo
+      MONGO_PORT: 27017
+      MONGO_DBNAME: unifi
+      MONGO_AUTHSOURCE: admin
+      # MONGO_URI: "mongodb://unifi:unifi@mongo:27017/unifi?authSource=admin"
+
+      # IMPORTANT: Disable UniFi's built-in HTTPS
+      # DISABLE_HTTPS: "true"
+
+      # Optional: explicitly define ports
+      # UNIFI_HTTP_PORT: 8080
+
+    volumes:
+      - ${CONFIG_ROOT}/unifi/config:/config
+
+    ports:
+      - 8443:8443
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      # - 1900:1900/udp #optional
+      - 8843:8843 #optional
+      - 8880:8880 #optional
+      - 6789:6789 #optional
+      - 5514:5514/udp #optional

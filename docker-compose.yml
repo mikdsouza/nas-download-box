@@ -10,7 +10,7 @@ services:
   
   proxy:
     container_name: proxy
-    image: jc21/nginx-proxy-manager:2.12.3
+    image: jc21/nginx-proxy-manager:latest
     restart: unless-stopped
     ports:
       - '80:80'
@@ -30,7 +30,7 @@ services:
       - calibre-web
       - qbittorrent
       - flaresolverr
-      - unifi
+      - unifi-os-server
 
   static:
     container_name: static-host
@@ -205,6 +205,7 @@ services:
       - ${MEDIA_ROOT}/TV Shows:/data/tvshows
       - ${MEDIA_ROOT}/Movies:/data/movies
       - ${MEDIA_ROOT}/Music:/data/music
+      - ${MEDIA_ROOT}:/media
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
       - /dev/dri/card0:/dev/dri/card0
@@ -213,63 +214,56 @@ services:
       - 8920:8920 #optional
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
-    deploy:
-      resources:
-        limits:
-          memory: 2.5G
     restart: unless-stopped
   
-  mongo:
-    image: mongo:4.4
-    container_name: mongo
-    restart: unless-stopped
-    volumes:
-      - ${CONFIG_ROOT}/mongo/data:/data/db
-      - ${CONFIG_ROOT}/mongo/init/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+  unifi-os-server:
+    image: ghcr.io/lemker/unifi-os-server:latest
+    container_name: unifi-os-server
+    cgroup: host
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    tmpfs:
+      - /run:exec
+      - /run/lock
+      - /tmp:exec
+      - /var/lib/journal
+      - /var/opt/unifi/tmp:size=64m
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: nope
-      MONGO_USER: unifi
-      MONGO_PASS: unifi
-      MONGO_DBNAME: unifi
-      MONGO_AUTHSOURCE: admin
-
-  unifi:
-    image: linuxserver/unifi-network-application:latest
-    container_name: unifi
-    depends_on:
-      - mongo
-    restart: unless-stopped
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: UTC
-
-      # MongoDB connection
-      MONGO_USER: unifi
-      MONGO_PASS: unifi
-      MONGO_HOST: mongo
-      MONGO_PORT: 27017
-      MONGO_DBNAME: unifi
-      MONGO_AUTHSOURCE: admin
-      # MONGO_URI: "mongodb://unifi:unifi@mongo:27017/unifi?authSource=admin"
-
-      # IMPORTANT: Disable UniFi's built-in HTTPS
-      # DISABLE_HTTPS: "true"
-
-      # Optional: explicitly define ports
-      # UNIFI_HTTP_PORT: 8080
-
+      - UOS_SYSTEM_IP=unifi.iammikhail.com
     volumes:
-      - ${CONFIG_ROOT}/unifi/config:/config
-
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+      - ${CONFIG_ROOT}/unifi-os-server/persistent:/persistent
+      - ${CONFIG_ROOT}/unifi-os-server/var-log:/var/log
+      - ${CONFIG_ROOT}/unifi-os-server/data:/data
+      - ${CONFIG_ROOT}/unifi-os-server/srv:/srv
+      - ${CONFIG_ROOT}/unifi-os-server/var-lib-unifi:/var/lib/unifi
+      - ${CONFIG_ROOT}/unifi-os-server/var-lib-mongodb:/var/lib/mongodb
+      - ${CONFIG_ROOT}/unifi-os-server/etc-rabbitmq-ssl:/etc/rabbitmq/ssl
     ports:
-      - 8443:8443
-      - 3478:3478/udp
-      - 10001:10001/udp
+      - 11443:443
+      - 5005:5005 # Optional
+      - 9543:9543 # Optional
+      - 6789:6789 # Optional
       - 8080:8080
-      # - 1900:1900/udp #optional
-      - 8843:8843 #optional
-      - 8880:8880 #optional
-      - 6789:6789 #optional
-      - 5514:5514/udp #optional
+      - 8443:8443 # Optional
+      - 8444:8444 # Optional
+      - 3478:3478/udp
+      - 5514:5514/udp # Optional
+      - 10003:10003/udp
+      - 11084:11084 # Optional
+      - 5671:5671 # Optional
+      - 8880:8880 # Optional
+      - 8881:8881 # Optional
+      - 8882:8882 # Optional
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: dlbox0
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+          gateway: 172.20.0.1

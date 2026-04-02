@@ -1,3 +1,7 @@
+include:
+  - streaming/docker-compose.yml
+  - network/docker-compose.yml
+
 services:
   watchtower:
     container_name: watchtower
@@ -7,7 +11,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --schedule "0 0 3 * * *" --disable-containers static-host --cleanup
-  
+
   proxy:
     container_name: proxy
     image: jc21/nginx-proxy-manager:latest
@@ -19,18 +23,9 @@ services:
     volumes:
       - ${CONFIG_ROOT}/proxy-manager/data:/data
       - ${CONFIG_ROOT}/proxy-manager/letsencrypt:/etc/letsencrypt
-    links:
-      - sonarr
-      - radarr
-      - lidarr
-      - static
-      # - readarr
-      - jellyfin
-      - prowlarr
-      - calibre-web
-      - qbittorrent
-      - flaresolverr
-      - unifi-os-server
+    networks:
+      - default
+      - proxy_net
 
   static:
     container_name: static-host
@@ -41,229 +36,9 @@ services:
       - ${STATIC_ROOT}:/home/static
     ports:
       - 3000:3000
-  
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-      - WEBUI_PORT=7081
-      - TORRENTING_PORT=6881
-    volumes:
-      - /${CONFIG_ROOT}/qbittorrent:/config
-      - ${MEDIA_ROOT}:/media
-    ports:
-      - 7081:7081
-      - 6881:6881
-      - 6881:6881/udp
-    restart: unless-stopped
-  
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ${CONFIG_ROOT}/prowlarr:/config
-    ports:
-      - 9696:9696
-    restart: always
-    links: 
-      - flaresolverr
-
-  flaresolverr:
-    # DockerHub mirror flaresolverr/flaresolverr:latest
-    image: ghcr.io/flaresolverr/flaresolverr:latest
-    container_name: flaresolverr
-    environment:
-      - LOG_LEVEL=${LOG_LEVEL:-info}
-      - LOG_HTML=${LOG_HTML:-false}
-      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
-      - TZ=Europe/London
-    ports:
-      - "${PORT:-8191}:8191"
-    restart: unless-stopped
-
-  sonarr:
-    container_name: sonarr
-    image: lscr.io/linuxserver/sonarr
-    restart: always
-    ports:
-      - 8989:8989
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${CONFIG_ROOT}/sonarr:/config # config files
-      - ${MEDIA_ROOT}:/media
-    links:
-      - qbittorrent
-  
-  lidarr:
-    container_name: lidarr
-    image: lscr.io/linuxserver/lidarr
-    restart: always
-    ports:
-      - 8686:8686
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${CONFIG_ROOT}/lidarr:/config # config files
-      - ${MEDIA_ROOT}:/media
-    links:
-      - qbittorrent
-
-  radarr:
-    container_name: radarr
-    image: lscr.io/linuxserver/radarr
-    restart: always
-    ports:
-      - 7878:7878
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ${CONFIG_ROOT}/radarr:/config # config files
-      - ${MEDIA_ROOT}:/media
-    links:
-      - qbittorrent
-  
-  # readarr:
-  #   image: lscr.io/linuxserver/readarr:develop
-  #   container_name: readarr
-  #   environment:
-  #     - PUID=${PUID} # default user id, defined in .env
-  #     - PGID=${PGID} # default group id, defined in .env
-  #     - TZ=${TZ} # timezone, defined in .env
-  #   volumes:
-  #     - ${CONFIG_ROOT}/readarr:/config
-  #     - ${MEDIA_ROOT}:/media
-  #   ports:
-  #     - 8787:8787
-  #   links:
-  #     - qbittorrent
-  #   restart: unless-stopped
-  
-  calibre-web:
-    image: lscr.io/linuxserver/calibre-web:latest
-    container_name: calibre-web
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
-    volumes:
-      - ${CONFIG_ROOT}/calibre-web:/config
-      - ${MEDIA_ROOT}:/media
-    ports:
-      - 8083:8083
-    restart: unless-stopped
-  
-  # calibre:
-  #   profiles:
-  #     - donotstart
-  #   image: lscr.io/linuxserver/calibre:latest
-  #   container_name: calibre
-  #   security_opt:
-  #     - seccomp:unconfined #optional
-  #   environment:
-  #     - PUID=${PUID} # default user id, defined in .env
-  #     - PGID=${PGID} # default group id, defined in .env
-  #     - TZ=${TZ} # timezone, defined in .env
-  #     - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
-  #     - SUBFOLDER=/calibre/
-  #     - NO_FULL
-  #   volumes:
-  #     - ${CONFIG_ROOT}/calibre:/config
-  #     - ${MEDIA_ROOT}:/media
-  #   ports:
-  #     - 8080:8080
-  #     - 8181:8181
-  #     - 8081:8081
-  #   restart: unless-stopped
-
-  jellyfin:
-    image: linuxserver/jellyfin
-    container_name: jellyfin
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-    volumes:
-      - ${CONFIG_ROOT}/jellyfin:/config
-      - ${MEDIA_ROOT}/TV Shows:/data/tvshows
-      - ${MEDIA_ROOT}/Movies:/data/movies
-      - ${MEDIA_ROOT}/Music:/data/music
-      - ${MEDIA_ROOT}:/media
-    devices:
-      - /dev/dri/renderD128:/dev/dri/renderD128
-      - /dev/dri/card0:/dev/dri/card0
-    ports:
-      - 8096:8096
-      - 8920:8920 #optional
-      - 7359:7359/udp #optional
-      - 1900:1900/udp #optional
-    restart: unless-stopped
-  
-  unifi-os-server:
-    image: ghcr.io/lemker/unifi-os-server:latest
-    container_name: unifi-os-server
-    cgroup: host
-    cap_add:
-      - NET_RAW
-      - NET_ADMIN
-    tmpfs:
-      - /run:exec
-      - /run/lock
-      - /tmp:exec
-      - /var/lib/journal
-      - /var/opt/unifi/tmp:size=64m
-    environment:
-      - UOS_SYSTEM_IP=unifi.iammikhail.com
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:rw
-      - ${CONFIG_ROOT}/unifi-os-server/persistent:/persistent
-      - ${CONFIG_ROOT}/unifi-os-server/var-log:/var/log
-      - ${CONFIG_ROOT}/unifi-os-server/data:/data
-      - ${CONFIG_ROOT}/unifi-os-server/srv:/srv
-      - ${CONFIG_ROOT}/unifi-os-server/var-lib-unifi:/var/lib/unifi
-      - ${CONFIG_ROOT}/unifi-os-server/var-lib-mongodb:/var/lib/mongodb
-      - ${CONFIG_ROOT}/unifi-os-server/etc-rabbitmq-ssl:/etc/rabbitmq/ssl
-    ports:
-      - 11443:443
-      - 5005:5005 # Optional
-      - 9543:9543 # Optional
-      - 6789:6789 # Optional
-      - 8080:8080
-      - 8443:8443 # Optional
-      - 8444:8444 # Optional
-      - 3478:3478/udp
-      - 5514:5514/udp # Optional
-      - 10003:10003/udp
-      - 11084:11084 # Optional
-      - 5671:5671 # Optional
-      - 8880:8880 # Optional
-      - 8881:8881 # Optional
-      - 8882:8882 # Optional
-    restart: unless-stopped
 
 networks:
   default:
     driver: bridge
-    driver_opts:
-      com.docker.network.bridge.name: dlbox0
-    ipam:
-      config:
-        - subnet: 172.20.0.0/24
-          gateway: 172.20.0.1
+  proxy_net:
+    external: true

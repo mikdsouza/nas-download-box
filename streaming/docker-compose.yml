@@ -1,0 +1,170 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=7081
+      - TORRENTING_PORT=6881
+    volumes:
+      - /${CONFIG_ROOT}/qbittorrent:/config
+      - ${MEDIA_ROOT}:/media
+    ports:
+      - 7081:7081
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+      - default
+      - proxy_net
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_ROOT}/prowlarr:/config
+    ports:
+      - 9696:9696
+    restart: always
+    links:
+      - flaresolverr
+    networks:
+      - default
+      - proxy_net
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=Europe/London
+    ports:
+      - "${PORT:-8191}:8191"
+    restart: unless-stopped
+    networks:
+      - default
+      - proxy_net
+
+  sonarr:
+    container_name: sonarr
+    image: lscr.io/linuxserver/sonarr
+    restart: always
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${CONFIG_ROOT}/sonarr:/config
+      - ${MEDIA_ROOT}:/media
+    links:
+      - qbittorrent
+    networks:
+      - default
+      - proxy_net
+
+  lidarr:
+    container_name: lidarr
+    image: lscr.io/linuxserver/lidarr
+    restart: always
+    ports:
+      - 8686:8686
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${CONFIG_ROOT}/lidarr:/config
+      - ${MEDIA_ROOT}:/media
+    links:
+      - qbittorrent
+    networks:
+      - default
+      - proxy_net
+
+  radarr:
+    container_name: radarr
+    image: lscr.io/linuxserver/radarr
+    restart: always
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${CONFIG_ROOT}/radarr:/config
+      - ${MEDIA_ROOT}:/media
+    links:
+      - qbittorrent
+    networks:
+      - default
+      - proxy_net
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1
+    volumes:
+      - ${CONFIG_ROOT}/calibre-web:/config
+      - ${MEDIA_ROOT}:/media
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+    networks:
+      - default
+      - proxy_net
+
+  jellyfin:
+    image: linuxserver/jellyfin
+    container_name: jellyfin
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_ROOT}/jellyfin:/config
+      - ${MEDIA_ROOT}/TV Shows:/data/tvshows
+      - ${MEDIA_ROOT}/Movies:/data/movies
+      - ${MEDIA_ROOT}/Music:/data/music
+      - ${MEDIA_ROOT}:/media
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
+    restart: unless-stopped
+    networks:
+      - default
+      - proxy_net
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: dlbox0
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+          gateway: 172.20.0.1
+  proxy_net:
+    external: true

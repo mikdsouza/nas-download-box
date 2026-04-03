@@ -16,6 +16,14 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.qbittorrent.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/qbit`)"
+      - "traefik.http.routers.qbittorrent.entrypoints=websecure"
+      - "traefik.http.routers.qbittorrent.tls.certresolver=cloudflare"
+      - "traefik.http.routers.qbittorrent.middlewares=qbit-strip"
+      - "traefik.http.middlewares.qbit-strip.stripprefix.prefixes=/qbit"
+      - "traefik.http.services.qbittorrent.loadbalancer.server.port=7081"
     networks:
       - default
       - proxy_net
@@ -34,6 +42,12 @@ services:
     restart: always
     links:
       - flaresolverr
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/prowlarr`)"
+      - "traefik.http.routers.prowlarr.entrypoints=websecure"
+      - "traefik.http.routers.prowlarr.tls.certresolver=cloudflare"
+      - "traefik.http.services.prowlarr.loadbalancer.server.port=9696"
     networks:
       - default
       - proxy_net
@@ -69,6 +83,12 @@ services:
       - ${MEDIA_ROOT}:/media
     links:
       - qbittorrent
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/sonarr`)"
+      - "traefik.http.routers.sonarr.entrypoints=websecure"
+      - "traefik.http.routers.sonarr.tls.certresolver=cloudflare"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
     networks:
       - default
       - proxy_net
@@ -89,6 +109,12 @@ services:
       - ${MEDIA_ROOT}:/media
     links:
       - qbittorrent
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.lidarr.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/lidarr`)"
+      - "traefik.http.routers.lidarr.entrypoints=websecure"
+      - "traefik.http.routers.lidarr.tls.certresolver=cloudflare"
+      - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
     networks:
       - default
       - proxy_net
@@ -109,6 +135,12 @@ services:
       - ${MEDIA_ROOT}:/media
     links:
       - qbittorrent
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/radarr`)"
+      - "traefik.http.routers.radarr.entrypoints=websecure"
+      - "traefik.http.routers.radarr.tls.certresolver=cloudflare"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
     networks:
       - default
       - proxy_net
@@ -153,6 +185,12 @@ services:
       - 7359:7359/udp
       - 1900:1900/udp
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/jellyfin`)"
+      - "traefik.http.routers.jellyfin.entrypoints=websecure"
+      - "traefik.http.routers.jellyfin.tls.certresolver=cloudflare"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
     networks:
       - default
       - proxy_net

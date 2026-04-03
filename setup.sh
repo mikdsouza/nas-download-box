@@ -3,12 +3,27 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Load env vars so we can reference CONFIG_ROOT
+set -a
+source "$SCRIPT_DIR/.env"
+set +a
+
 echo "==> Creating external proxy_net network (if not exists)..."
 if ! docker network inspect proxy_net &>/dev/null; then
   docker network create proxy_net
   echo "    Created proxy_net"
 else
   echo "    proxy_net already exists, skipping"
+fi
+
+echo "==> Setting up Traefik acme.json..."
+mkdir -p "$CONFIG_ROOT/traefik"
+if [ ! -f "$CONFIG_ROOT/traefik/acme.json" ]; then
+  touch "$CONFIG_ROOT/traefik/acme.json"
+  chmod 600 "$CONFIG_ROOT/traefik/acme.json"
+  echo "    Created acme.json"
+else
+  echo "    acme.json already exists, skipping"
 fi
 
 echo "==> Starting all stacks..."

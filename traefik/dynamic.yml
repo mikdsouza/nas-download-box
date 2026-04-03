@@ -1,0 +1,19 @@
+http:
+  routers:
+    nas:
+      rule: "Host(`nas.iammikhail.com`)"
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: cloudflare
+      service: nas-svc
+
+  services:
+    nas-svc:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.10.201:5000"
+
+  serversTransports:
+    unifi-transport:
+      insecureSkipVerify: true

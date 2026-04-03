@@ -5,6 +5,7 @@
 !nginx/
 !streaming/
 !network/
+!traefik/
 !*.conf
 !*.html
 !*.md

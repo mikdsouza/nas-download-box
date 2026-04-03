@@ -6,6 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to the show</title>
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <style>
+.grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1rem;
+        }
+
+        .grid a {
+            text-decoration: none;
+        }
+
+        .grid article {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: center;
+            padding: 1.25rem 1rem;
+            color: var(--text);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+            cursor: pointer;
+        }
+
+        .grid a:hover article {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.15);
+            border-color: #7c3aed;
+        }
+
+        .grid article img {
+            width: 3rem;
+            height: 3rem;
+            object-fit: contain;
+        }
+
+        .grid article strong {
+            color: var(--text);
+        }
+    </style>
 </head>
 
 <body>
@@ -14,17 +56,59 @@
     </header>
 
     <main>
-        <ul>
-            <li><strong>Watch Something:</strong> <a href="/jellyfin">/jellyfin</a></li>
-            <li><strong>Download Client:</strong> <a href="/qbit">/qbit</a></li>
-            <li><strong>TV Shows:</strong> <a href="/sonarr">/sonarr</a></li>
-            <li><strong>Music:</strong> <a href="/lidarr">/lidarr</a></li>
-            <li><strong>Movies:</strong> <a href="/radarr">/radarr</a></li>
-            <!-- <li><strong>Books:</strong> <a href="/readarr">/readarr</a></li> -->
-            <li><strong>Calibre Web:</strong> <a href="/calibre-web">/calibre-web</a></li>
-            <li><strong>Indexing:</strong> <a href="/prowlarr">/prowlarr</a></li>
-            <li><strong>Proxy Management:</strong> <a href="https://proxy.nas.iammikhail.com">proxy.nas.iammikhail.com</a></li>
-        </ul>
+        <section>
+            <h3>Media</h3>
+            <div class="grid">
+                <a href="/jellyfin"><article>
+                    <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png" alt="Jellyfin">
+                    <strong>Jellyfin</strong>
+                </article></a>
+                <a href="/sonarr"><article>
+                    <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/sonarr.png" alt="Sonarr">
+                    <strong>Sonarr</strong>
+                </article></a>
+                <a href="/radarr"><article>
+                    <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/radarr.png" alt="Radarr">
+                    <strong>Radarr</strong>
+                </article></a>
+                <a href="/lidarr"><article>
+                    <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/lidarr.png" alt="Lidarr">
+                    <strong>Lidarr</strong>
+                </article></a>
+            </div>
+        </section>
+
+        <section>
+            <h3>Downloads</h3>
+            <div class="grid">
+                <a href="/qbit"><article>
+                    <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/qbittorrent.png" alt="qBittorrent">
+                    <strong>qBittorrent</strong>
+                </article></a>
+                <a href="/prowlarr"><article>
+                    <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/prowlarr.png" alt="Prowlarr">
+                    <strong>Prowlarr</strong>
+                </article></a>
+            </div>
+        </section>
+
+        <section>
+            <h3>Infrastructure</h3>
+            <div class="grid">
+                <a href="https://proxy.nas.iammikhail.com"><article>
+                    <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/traefik.png" alt="Traefik">
+                    <strong>Traefik</strong>
+                </article></a>
+                <a href="https://unifi.iammikhail.com"><article>
+                    <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/unifi.png" alt="UniFi">
+                    <strong>UniFi</strong>
+                </article></a>
+                <a href="https://nas.iammikhail.com"><article>
+                    <img src="https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/openmediavault.png" alt="NAS">
+                    <strong>NAS</strong>
+                </article></a>
+            </div>
+        </section>
     </main>
 </body>
 

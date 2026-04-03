@@ -12,17 +12,26 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --schedule "0 0 3 * * *" --disable-containers static-host --cleanup
 
-  proxy:
-    container_name: proxy
-    image: jc21/nginx-proxy-manager:latest
+  traefik:
+    container_name: traefik
+    image: traefik:v3
     restart: unless-stopped
     ports:
       - '80:80'
-      - '81:81'
       - '443:443'
+    environment:
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
     volumes:
-      - ${CONFIG_ROOT}/proxy-manager/data:/data
-      - ${CONFIG_ROOT}/proxy-manager/letsencrypt:/etc/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${CONFIG_ROOT}/traefik/acme.json:/acme.json
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/dynamic.yml:/etc/traefik/dynamic.yml:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`proxy.nas.iammikhail.com`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=cloudflare"
+      - "traefik.http.routers.dashboard.service=api@internal"
     networks:
       - default
       - proxy_net
@@ -36,6 +45,15 @@ services:
       - ${STATIC_ROOT}:/home/static
     ports:
       - 3000:3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.static.rule=Host(`downloads.iammikhail.com`)"
+      - "traefik.http.routers.static.entrypoints=websecure"
+      - "traefik.http.routers.static.tls.certresolver=cloudflare"
+      - "traefik.http.services.static.loadbalancer.server.port=3000"
+    networks:
+      - default
+      - proxy_net
 
 networks:
   default:

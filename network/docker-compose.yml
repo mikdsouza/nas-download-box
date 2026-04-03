@@ -40,6 +40,14 @@ services:
       - 8881:8881
       - 8882:8882
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.unifi.rule=Host(`unifi.iammikhail.com`)"
+      - "traefik.http.routers.unifi.entrypoints=websecure"
+      - "traefik.http.routers.unifi.tls.certresolver=cloudflare"
+      - "traefik.http.services.unifi.loadbalancer.server.port=443"
+      - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
+      - "traefik.http.services.unifi.loadbalancer.serverstransport=unifi-transport@file"
     networks:
       - default
       - proxy_net

@@ -1,0 +1,3 @@
+zone.home:
+  latitude: !secret latitude
+  longitude: !secret longitude

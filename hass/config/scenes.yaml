@@ -1,0 +1,841 @@
+- id: '1734090117367'
+  name: Cozy living
+  entities:
+    light.on_off_plug_1:
+      supported_color_modes:
+      - onoff
+      color_mode: onoff
+      mode: normal
+      dynamics: none
+      friendly_name: Showcase
+      supported_features: 0
+      state: 'on'
+    light.bedroom_ceiling:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Living 1
+      supported_features: 36
+      state: 'off'
+    light.lamp:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Living 2
+      supported_features: 36
+      state: 'off'
+    light.living_ceiling:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Living 3
+      supported_features: 36
+      state: 'off'
+    light.mushroom:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Living 4
+      supported_features: 36
+      state: 'off'
+    light.color_temperature_light_1_2:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 4000
+      min_mireds: 250
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 230
+      color_temp_kelvin: 2570
+      color_temp: 389
+      hs_color:
+      - 28.696
+      - 70.045
+      rgb_color:
+      - 255
+      - 162
+      - 76
+      xy_color:
+      - 0.539
+      - 0.389
+      mode: normal
+      dynamics: none
+      friendly_name: Lamp
+      supported_features: 40
+      state: 'on'
+  icon: mdi:sofa
+  metadata: {}
+- id: '1734090485792'
+  name: All living room lights off
+  entities:
+    light.on_off_plug_1:
+      supported_color_modes:
+      - onoff
+      color_mode:
+      mode: normal
+      dynamics: none
+      friendly_name: Showcase
+      supported_features: 0
+      state: 'off'
+    light.bedroom_ceiling:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Living 1
+      supported_features: 36
+      state: 'off'
+    light.lamp:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Living 2
+      supported_features: 36
+      state: 'off'
+    light.living_ceiling:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Living 3
+      supported_features: 36
+      state: 'off'
+    light.mushroom:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      friendly_name: Living 4
+      supported_features: 36
+      state: 'off'
+    light.color_temperature_light_1_2:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 4000
+      min_mireds: 250
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      mode: normal
+      dynamics: none
+      friendly_name: Lamp
+      supported_features: 40
+      state: 'off'
+  icon: mdi:sofa
+  metadata: {}
+- id: '1734428729779'
+  name: Dining
+  entities:
+    light.living_ceiling:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 230
+      color_temp_kelvin: 2578
+      color_temp: 387
+      hs_color:
+      - 28.677
+      - 69.769
+      rgb_color:
+      - 255
+      - 162
+      - 77
+      xy_color:
+      - 0.538
+      - 0.389
+      friendly_name: Living 3
+      supported_features: 36
+      state: 'on'
+    light.mushroom:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 230
+      color_temp_kelvin: 2578
+      color_temp: 387
+      hs_color:
+      - 28.677
+      - 69.769
+      rgb_color:
+      - 255
+      - 162
+      - 77
+      xy_color:
+      - 0.538
+      - 0.389
+      friendly_name: Living 4
+      supported_features: 36
+      state: 'on'
+  icon: mdi:silverware
+  metadata: {}
+- id: '1737942775728'
+  name: No glare on tv
+  entities:
+    cover.living_room_door:
+      current_position: 28
+      device_class: shade
+      friendly_name: Living room door
+      supported_features: 15
+      state: open
+    cover.living_room_left:
+      current_position: 0
+      device_class: shade
+      friendly_name: Living Room left
+      supported_features: 15
+      state: closed
+    cover.living_room_right:
+      current_position: 0
+      device_class: shade
+      friendly_name: Living Room right
+      supported_features: 15
+      state: closed
+    cover.tv_window:
+      current_position: 0
+      device_class: shade
+      friendly_name: TV window
+      supported_features: 15
+      state: closed
+  icon: mdi:television
+  metadata: {}
+- id: '1739523678024'
+  name: Night TV
+  entities:
+    light.color_temperature_light_1_2:
+      min_color_temp_kelvin: 2202
+      max_color_temp_kelvin: 4000
+      min_mireds: 250
+      max_mireds: 454
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 51
+      color_temp_kelvin: 2202
+      color_temp: 454
+      hs_color:
+      - 29.79
+      - 84.553
+      rgb_color:
+      - 255
+      - 146
+      - 39
+      xy_color:
+      - 0.579
+      - 0.388
+      mode: normal
+      dynamics: none
+      friendly_name: Lamp
+      supported_features: 40
+      state: 'on'
+    light.on_off_plug_1:
+      supported_color_modes:
+      - onoff
+      color_mode:
+      mode: normal
+      dynamics: none
+      friendly_name: Showcase
+      supported_features: 0
+      state: 'off'
+  metadata: {}
+- id: '1752909869359'
+  name: Evening dri dri working
+  entities:
+    light.extended_color_light_1:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 10
+      color_temp_kelvin: 3649
+      color_temp: 274
+      hs_color:
+      - 27.037
+      - 41.629
+      rgb_color:
+      - 255
+      - 197
+      - 149
+      xy_color:
+      - 0.442
+      - 0.371
+      mode: normal
+      dynamics: none
+      friendly_name: Study ceiling
+      supported_features: 40
+      state: 'on'
+    light.elements_5dca:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 4000
+      min_mireds: 250
+      max_mireds: 666
+      effect_list:
+      - Cool
+      - Warm
+      - Warm flow
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect: Cool
+      color_mode: hs
+      brightness: 247
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      icon: mdi:hexagon-multiple-outline
+      friendly_name: Study elements
+      supported_features: 36
+      state: 'on'
+    light.study_shelf:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 4294
+      color_temp: 232
+      hs_color:
+      - 26.727
+      - 29.792
+      rgb_color:
+      - 255
+      - 213
+      - 179
+      xy_color:
+      - 0.403
+      - 0.36
+      friendly_name: Study Shelf
+      supported_features: 36
+      state: 'on'
+  icon: mdi:briefcase
+  metadata: {}
+- id: '1752910021578'
+  name: Evening mik mik working standing
+  entities:
+    light.extended_color_light_1:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      mode: normal
+      dynamics: none
+      friendly_name: Study ceiling
+      supported_features: 40
+      state: 'off'
+    light.elements_5dca:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 4000
+      min_mireds: 250
+      max_mireds: 666
+      effect_list:
+      - Cool
+      - Warm
+      - Warm flow
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect: Cool
+      color_mode: hs
+      brightness: 244
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      - 0
+      - 0
+      rgb_color:
+      - 255
+      - 255
+      - 255
+      xy_color:
+      - 0.323
+      - 0.329
+      icon: mdi:hexagon-multiple-outline
+      friendly_name: Study elements
+      supported_features: 36
+      state: 'on'
+    light.study_shelf:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 3919
+      color_temp: 255
+      hs_color:
+      - 26.852
+      - 36.357
+      rgb_color:
+      - 255
+      - 204
+      - 162
+      xy_color:
+      - 0.425
+      - 0.367
+      friendly_name: Study Shelf
+      supported_features: 36
+      state: 'on'
+  icon: mdi:briefcase
+  metadata: {}
+- id: '1752910224681'
+  name: Evening study
+  entities:
+    light.elements_5dca:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 4000
+      min_mireds: 250
+      max_mireds: 666
+      effect_list:
+      - Cool
+      - Warm
+      - Warm flow
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 254
+      color_temp_kelvin: 1500
+      color_temp: 666
+      hs_color:
+      - 25.471
+      - 100
+      rgb_color:
+      - 255
+      - 108
+      - 0
+      xy_color:
+      - 0.635
+      - 0.355
+      icon: mdi:hexagon-multiple-outline
+      friendly_name: Study elements
+      supported_features: 36
+      state: 'on'
+    light.extended_color_light_1:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode:
+      brightness:
+      color_temp_kelvin:
+      color_temp:
+      hs_color:
+      rgb_color:
+      xy_color:
+      mode: normal
+      dynamics: none
+      friendly_name: Study ceiling
+      supported_features: 40
+      state: 'off'
+    light.study_shelf:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 102
+      color_temp_kelvin: 1500
+      color_temp: 666
+      hs_color:
+      - 25.471
+      - 100
+      rgb_color:
+      - 255
+      - 108
+      - 0
+      xy_color:
+      - 0.635
+      - 0.355
+      friendly_name: Study Shelf
+      supported_features: 36
+      state: 'on'
+  icon: mdi:weather-sunset
+  metadata: {}
+- id: '1752973103791'
+  name: Morning mik mik working sitting
+  entities:
+    light.extended_color_light_1:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 13
+      color_temp_kelvin: 2000
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      mode: normal
+      dynamics: none
+      friendly_name: Study ceiling
+      supported_features: 40
+      state: 'on'
+    light.elements_5dca:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 4000
+      min_mireds: 250
+      max_mireds: 666
+      effect_list:
+      - Cool
+      - Warm
+      - Warm flow
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 252
+      color_temp_kelvin: 4000
+      color_temp: 250
+      hs_color:
+      - 26.812
+      - 34.87
+      rgb_color:
+      - 255
+      - 206
+      - 166
+      xy_color:
+      - 0.42
+      - 0.365
+      icon: mdi:hexagon-multiple-outline
+      friendly_name: Study elements
+      supported_features: 36
+      state: 'on'
+    light.study_shelf:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 4927
+      color_temp: 202
+      hs_color:
+      - 26.931
+      - 20.243
+      rgb_color:
+      - 255
+      - 227
+      - 203
+      xy_color:
+      - 0.374
+      - 0.351
+      friendly_name: Study Shelf
+      supported_features: 36
+      state: 'on'
+  icon: mdi:briefcase
+  metadata: {}
+- id: '1752973187496'
+  name: Morning mik mik working standing
+  entities:
+    light.extended_color_light_1:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6535
+      min_mireds: 153
+      max_mireds: 500
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 51
+      color_temp_kelvin: 2000
+      color_temp: 500
+      hs_color:
+      - 30.601
+      - 94.547
+      rgb_color:
+      - 255
+      - 137
+      - 14
+      xy_color:
+      - 0.598
+      - 0.383
+      mode: normal
+      dynamics: none
+      friendly_name: Study ceiling
+      supported_features: 40
+      state: 'on'
+    light.elements_5dca:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 4000
+      min_mireds: 250
+      max_mireds: 666
+      effect_list:
+      - Cool
+      - Warm
+      - Warm flow
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 252
+      color_temp_kelvin: 4000
+      color_temp: 250
+      hs_color:
+      - 26.812
+      - 34.87
+      rgb_color:
+      - 255
+      - 206
+      - 166
+      xy_color:
+      - 0.42
+      - 0.365
+      icon: mdi:hexagon-multiple-outline
+      friendly_name: Study elements
+      supported_features: 36
+      state: 'on'
+    light.study_shelf:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      min_mireds: 111
+      max_mireds: 666
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 4927
+      color_temp: 202
+      hs_color:
+      - 26.931
+      - 20.243
+      rgb_color:
+      - 255
+      - 227
+      - 203
+      xy_color:
+      - 0.374
+      - 0.351
+      friendly_name: Study Shelf
+      supported_features: 36
+      state: 'on'
+  icon: mdi:briefcase
+  metadata: {}

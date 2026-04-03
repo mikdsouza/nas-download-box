@@ -1,0 +1,473 @@
+- id: '1733915825083'
+  alias: Aircon timer finished
+  description: ''
+  triggers:
+  - trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.aircon_off
+  conditions: []
+  actions:
+  - action: script.aircon_s_off
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1734090300865'
+  alias: Tradfrii center button pressed
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: edd617b19036f67bb9d72e03012383c4
+    type: action
+    subtype: toggle
+    metadata: {}
+    trigger: device
+  - domain: mqtt
+    device_id: 08eccd16aa71001bc25d47aece2d2536
+    type: button_short_press
+    subtype: button_1
+    trigger: device
+  - domain: mqtt
+    device_id: 805f499582a43f5782c5b393c9b0e2ab
+    type: button_long_press
+    subtype: button_1
+    trigger: device
+  conditions:
+  - condition: device
+    type: is_off
+    device_id: be45e0972f92edc1f37334745898a14f
+    entity_id: cfa142c48919570a352dea0cc9cdbbec
+    domain: light
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: scene.cozy_living
+  mode: single
+- id: '1734090570253'
+  alias: Tradfrii centre when lamp is on
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: edd617b19036f67bb9d72e03012383c4
+    type: action
+    subtype: toggle
+    metadata: {}
+    trigger: device
+  - domain: mqtt
+    device_id: 08eccd16aa71001bc25d47aece2d2536
+    type: button_short_press
+    subtype: button_1
+    trigger: device
+  conditions:
+  - condition: device
+    type: is_on
+    device_id: be45e0972f92edc1f37334745898a14f
+    entity_id: cfa142c48919570a352dea0cc9cdbbec
+    domain: light
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: scene.cozy_living_duplicate
+  mode: single
+- id: '1736479394923'
+  alias: Tradfri up screen off
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: edd617b19036f67bb9d72e03012383c4
+    type: action
+    subtype: brightness_up_click
+    metadata: {}
+    trigger: device
+  conditions:
+  - condition: device
+    type: is_on
+    device_id: d6990cf60fe01f9face276f2d46e768a
+    entity_id: 1414d25e92a350933d00f4ba9385340e
+    domain: remote
+  actions:
+  - action: script.tv_screen_off
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1737778746577'
+  alias: Close living room blinds when on button is pressed
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d7e5110eab4a66db60855e83b8ef10ba
+    type: action
+    subtype: 'on'
+    trigger: device
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: cover.living_room_blinds
+      state: closing
+  actions:
+  - action: cover.close_cover
+    target:
+      entity_id:
+      - cover.living_room_blinds
+    data: {}
+  mode: single
+- id: '1737778799346'
+  alias: Open living room blinds when off is pressed
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d7e5110eab4a66db60855e83b8ef10ba
+    type: action
+    subtype: 'off'
+    trigger: device
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: cover.living_room_blinds
+      state: opening
+  actions:
+  - action: cover.open_cover
+    target:
+      entity_id:
+      - cover.living_room_blinds
+    data: {}
+  mode: single
+- id: '1737779232490'
+  alias: Stop living room blinds if they are moving and a button is pressed
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d7e5110eab4a66db60855e83b8ef10ba
+    type: action
+    subtype: 'on'
+    trigger: device
+  - domain: mqtt
+    device_id: d7e5110eab4a66db60855e83b8ef10ba
+    type: action
+    subtype: 'off'
+    trigger: device
+  conditions:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: cover.living_room_blinds
+      state: opening
+    - condition: state
+      entity_id: cover.living_room_blinds
+      state: closing
+  actions:
+  - action: cover.stop_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id: cover.living_room_blinds
+  mode: single
+- id: '1737969356627'
+  alias: Entrace button click toggles hallway light
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 805f499582a43f5782c5b393c9b0e2ab
+    type: button_short_press
+    subtype: button_1
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      area_id: hallway
+  mode: single
+- id: '1737969520027'
+  alias: Bedroom flic click toggles bedroom lights
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 1496419231b61564962d29896e87af64
+    type: button_short_press
+    subtype: button_1
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.bedroom_lights
+  mode: single
+- id: '1737970060831'
+  alias: Living flic long press toggles living room ceiling lights
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 08eccd16aa71001bc25d47aece2d2536
+    type: button_long_press
+    subtype: button_1
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.living_room
+  mode: single
+- id: '1738033984586'
+  alias: Low Battery Notifications & Actions
+  description: ''
+  use_blueprint:
+    path: Blackshome/low-battery-notifications-and-actions.yaml
+    input:
+      include_time: time_enabled
+      time: '12:00:00'
+      weekday_options:
+      - sun
+      include_persistent_notification: enable_persistent_notification
+      include_easy_notify: enable_easy_notify
+      notify_device:
+      - fc0a7391e6019c3a2d3638052f04dfd6
+      notify_data: []
+      exclude_sensors:
+        entity_id:
+        - sensor.adriana_orlands_iphone_battery_level
+        - sensor.tab_s6_battery_level
+        - sensor.sm_s921b_battery_level
+- id: '1738661454583'
+  alias: Close bedroom blinds on "on" press
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: e07a5eef39531396fc3b8947662ee588
+    type: action
+    subtype: 'on'
+    trigger: device
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: cover.bedroom_blinds
+      state: closing
+  actions:
+  - action: cover.close_cover
+    data: {}
+    target:
+      entity_id: cover.bedroom_blinds
+  mode: single
+- id: '1738661515176'
+  alias: Open bedroom blings on "off" press
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: e07a5eef39531396fc3b8947662ee588
+    type: action
+    subtype: 'off'
+    trigger: device
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: cover.bedroom_blinds
+      state: opening
+  actions:
+  - action: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.bedroom_blinds
+  mode: single
+- id: '1738661590475'
+  alias: Stop moving bedroom blinds when a button is pressed
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: e07a5eef39531396fc3b8947662ee588
+    type: action
+    subtype: 'on'
+    trigger: device
+  - domain: mqtt
+    device_id: e07a5eef39531396fc3b8947662ee588
+    type: action
+    subtype: 'off'
+    trigger: device
+  conditions:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: cover.bedroom_blinds
+      state: opening
+    - condition: state
+      entity_id: cover.bedroom_blinds
+      state: closing
+  actions:
+  - action: cover.stop_cover
+    metadata: {}
+    data: {}
+    target:
+      entity_id: cover.bedroom_blinds
+  mode: single
+- id: '1742807725788'
+  alias: Cycle through mik's study scenes
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 5ac02c2f79cf6a23015e7663cfd2c225
+    type: action
+    subtype: on_press
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.toggle
+    metadata: {}
+    data: {}
+    target:
+      entity_id: script.cycle_through_mik_s_study_scenes
+  mode: single
+- id: '1743837084870'
+  alias: Set evening scene
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 5ac02c2f79cf6a23015e7663cfd2c225
+    type: action
+    subtype: up_press
+    trigger: device
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    data:
+      transition: 1
+    target:
+      entity_id: scene.evening_study
+  mode: single
+- id: '1752910638546'
+  alias: Turn off all study lights
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 5ac02c2f79cf6a23015e7663cfd2c225
+    type: action
+    subtype: down_press
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      area_id: deea7f319f9b4b82aec9e3aa14de4fac
+  mode: single
+- id: '1758144316530'
+  alias: Automatic Backups
+  description: ''
+  use_blueprint:
+    path: jcwillox/automatic_backups.yaml
+    input:
+      backup_time: '14:30:00'
+      enable_yearly: false
+      enable_monthly: false
+- id: '1767615827567'
+  alias: Turn on bedroom air con when bed button is clicked
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 9346cce5c11d9833a09ef105a50b96ed
+    type: button_short_press
+    subtype: button_1
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
+  - action: climate.turn_on
+    metadata: {}
+    target:
+      entity_id:
+      - climate.aircon
+      - climate.aircon_bedroom_thermostat
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 7
+      milliseconds: 0
+  - action: climate.set_fan_mode
+    metadata: {}
+    target:
+      entity_id: climate.aircon
+    data:
+      fan_mode: Low
+  mode: single
+- id: '1767615914011'
+  alias: Turn off bedroom air con when bed button is held
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: 9346cce5c11d9833a09ef105a50b96ed
+    type: button_long_press
+    subtype: button_1
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.aircon_s_off
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1769600810518'
+  alias: Print stopped
+  description: ''
+  triggers:
+  - device_id: b9c2a89fed0cbf5660b107498e3c4b05
+    domain: bambu_lab
+    type: event_print_finished
+    trigger: device
+  - device_id: b9c2a89fed0cbf5660b107498e3c4b05
+    domain: bambu_lab
+    type: event_print_canceled
+    trigger: device
+  conditions: []
+  actions:
+  - action: script.turn_off_truman_s_light_after_1_minute
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1770452221852'
+  alias: Open TV window blind
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d5e8fac2a6480a4b7206a78f4d631ff4
+    type: action
+    subtype: 'off'
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
+  - device_id: a3617535c0ad89c348dbf1ea30d273e2
+    domain: cover
+    entity_id: fc100802be137890abb640eabbf48d7a
+    type: open
+  mode: single
+- id: '1770452248370'
+  alias: Close TV Window Blind
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d5e8fac2a6480a4b7206a78f4d631ff4
+    type: action
+    subtype: 'on'
+    trigger: device
+  conditions: []
+  actions:
+  - device_id: a3617535c0ad89c348dbf1ea30d273e2
+    domain: cover
+    entity_id: fc100802be137890abb640eabbf48d7a
+    type: close
+  mode: single

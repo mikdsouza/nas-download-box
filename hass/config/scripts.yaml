@@ -1,0 +1,123 @@
+speaker_vol_up:
+  alias: Speaker vol up
+  sequence:
+  - service: remote.send_command
+    data:
+      device: speakers
+      command: volume up
+    target:
+      device_id: 45242a27093d11ebacad254b96793c10
+  mode: single
+  icon: mdi:volume-plus
+speaker_vol_down:
+  alias: Speaker vol down
+  sequence:
+  - service: remote.send_command
+    data:
+      device: speakers
+      command: volume down
+    target:
+      device_id: 45242a27093d11ebacad254b96793c10
+  mode: single
+  icon: mdi:volume-minus
+tv_screen_off:
+  alias: TV screen off
+  sequence:
+  - action: remote.send_command
+    target:
+      entity_id: remote.guppy
+    data:
+      device: tv
+      command: quick_settings
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - metadata: {}
+    data:
+      delay_secs: 0.2
+      command:
+      - DPAD_LEFT
+      - DPAD_LEFT
+      - DPAD_LEFT
+      - DPAD_LEFT
+      - DPAD_LEFT
+      - DPAD_LEFT
+      - DPAD_LEFT
+      - DPAD_LEFT
+      - DPAD_LEFT
+      - DPAD_LEFT
+      - DPAD_CENTER
+    target:
+      entity_id: remote.living_room_tv
+    action: remote.send_command
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+    enabled: false
+  - action: remote.send_command
+    metadata: {}
+    data:
+      command:
+      - DPAD_UP
+      - DPAD_CENTER
+      - DPAD_DOWN
+      - DPAD_CENTER
+      delay_secs: 1
+    target:
+      entity_id: remote.living_room_tv
+    enabled: false
+  mode: single
+  icon: mdi:television-off
+aircon_s_off:
+  alias: Aircon(s) off
+  sequence:
+  - action: timer.cancel
+    metadata: {}
+    data: {}
+    target:
+      entity_id: timer.aircon_off
+  - action: climate.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - climate.aircon
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: climate.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: climate.aircon_bedroom_thermostat
+  description: ''
+  icon: mdi:air-purifier-off
+cycle_through_mik_s_study_scenes:
+  sequence:
+  - action: scene_sequencer.cycle
+    data:
+      scenes:
+      - scene.morning_mik_mik_working_sitting
+      - scene.morning_mik_mik_working_standing
+      - scene.evening_mik_mik_working_standing
+  alias: Cycle through mik's study scenes
+  description: ''
+turn_off_truman_s_light_after_1_minute:
+  sequence:
+  - delay:
+      hours: 0
+      minutes: 1
+      seconds: 0
+      milliseconds: 0
+  - type: turn_off
+    device_id: b9c2a89fed0cbf5660b107498e3c4b05
+    entity_id: 12411d3043e96637e881684de0e8eb86
+    domain: light
+  alias: Turn off Truman's light after 1 minute
+  description: ''

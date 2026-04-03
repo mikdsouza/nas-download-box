@@ -1,0 +1,1 @@
+turn_off_pc: 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i /config/.ssh/id_rsa mikha@mikhail-dkk.iammikhail.com shutdown /h /f'

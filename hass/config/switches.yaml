@@ -1,0 +1,30 @@
+- platform: template
+  switches:
+    aircon_fan_cool_mode:
+      unique_id: aircon_fan_cool_mode
+      icon_template: mdi:air-conditioner
+      friendly_name: Aircon fan/cool mode
+      value_template: "{{ is_state_attr('climate.aircon', 'temperature', 20) }}"
+      # or is_state_attr('climate.aircon', 'hvac_mode', 'fan_only')
+      availability_template: >
+        {{ 
+          is_state_attr('climate.aircon', 'power', 'on') and (
+            is_state_attr('climate.aircon', 'hvac_mode', 'cool') 
+            
+          ) and
+          not is_state('climate.aircon_bedroom_thermostat', 'off')
+        }}
+      turn_on:
+        action: climate.set_temperature
+        target:
+          entity_id:
+            - climate.aircon
+        data:
+          temperature: 20
+      turn_off:
+        action: climate.set_temperature
+        target:
+          entity_id:
+            - climate.aircon
+        data:
+          temperature: 27

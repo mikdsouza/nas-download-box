@@ -1,0 +1,23 @@
+# Ignore everything by default
+*
+
+# Source-controlled config files
+!*.yaml
+!.gitignore
+
+# Ignore runtime/generated directories and files
+.storage/
+.cloud/
+.google.token
+.ssh/
+*.log
+*.log.*
+
+# Exclude secrets and credentials
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+
+# Exclude legacy files from old hass server
+docker-compose.yaml
+nginx.conf

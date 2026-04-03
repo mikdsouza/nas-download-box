@@ -1,0 +1,13 @@
+purge_keep_days: 3
+db_url: "postgresql://docker:docker@localhost:5432/docker"
+exclude:
+  domains:
+    - automation
+    - weblink
+    - updater
+    - group
+    - script
+    - zone
+    - zwave
+    - weather
+    - device_tracker

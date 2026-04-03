@@ -1,0 +1,80 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+http:
+  use_x_forwarded_for: true
+  trusted_proxies: 
+    - 172.16.0.0/12
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+sensor: !include sensors.yaml
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+lovelace:
+  # mode: yaml
+  resources:
+    - url: /hacsfiles/lovelace-card-tools/card-tools.js
+      type: module
+    - url: /hacsfiles/lovelace-layout-card/layout-card.js
+      type: module
+    - url: /hacsfiles/bar-card/bar-card.js
+      type: module
+    - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
+      type: module
+    - url: /hacsfiles/button-card/button-card.js
+      type: module
+    - url: /hacsfiles/lovelace-card-preloader/lovelace-card-preloader.js
+      type: module
+
+recorder: !include recorders.yaml
+
+homeassistant:
+  customize: !include customize.yaml
+  internal_url: !secret url
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.0.0/24
+        - 192.168.10.0/24
+        - 192.168.2.0/24
+    - type: homeassistant
+  unit_system: metric
+  time_zone: !secret timezone
+  currency: !secret currency
+  country: !secret country
+
+api:
+
+wake_on_lan:
+
+zeroconf:
+
+scene: !include scenes.yaml
+
+switch: !include switches.yaml
+
+shell_command: !include shell_commands.yaml
+
+mobile_app:
+
+logger:
+  default: info
+  logs:
+    homeassistant.components.smartthings: debug
+
+climate:
+  - platform: climate_ip
+    config_file: 'mim-h03_heatpump.yaml'
+    ip_address: 'samsungaircon.iammikhail.com'
+    token: !secret mim-h03
+    cert: 'ac14k_m.pem'
+    name: aircon
+    # debug: true
+    # poll: true
+    device_id: '032001000' # '032001000'
+
+scene_sequencer:

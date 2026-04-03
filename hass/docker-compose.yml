@@ -10,7 +10,7 @@ services:
     environment:
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_ROOT}/homeassistant:/config
+      - ./config:/config
       - /run/dbus:/run/dbus:ro
       - /etc/localtime:/etc/localtime:ro
 
@@ -32,7 +32,7 @@ services:
     image: eclipse-mosquitto
     restart: unless-stopped
     volumes:
-      - ${CONFIG_ROOT}/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
       - ${CONFIG_ROOT}/mosquitto/data:/mosquitto/data
       - ${CONFIG_ROOT}/mosquitto/log:/mosquitto/log
     ports:
@@ -48,6 +48,6 @@ services:
     environment:
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_ROOT}/zigbee2mqtt:/app/data
+      - ./zigbee2mqtt:/app/data
     devices:
       - ${ZIGBEE_DEVICE:-/dev/ttyACM0}:/dev/ttyACM0

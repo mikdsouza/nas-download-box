@@ -6,6 +6,7 @@
 !streaming/
 !network/
 !traefik/
+!hass/
 !*.conf
 !*.html
 !*.md

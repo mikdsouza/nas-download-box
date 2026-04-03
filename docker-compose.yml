@@ -1,6 +1,7 @@
 include:
   - streaming/docker-compose.yml
   - network/docker-compose.yml
+  - hass/docker-compose.yml
 
 services:
   watchtower:
@@ -16,6 +17,8 @@ services:
     container_name: traefik
     image: traefik:v3
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - '80:80'
       - '443:443'

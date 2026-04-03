@@ -26,6 +26,13 @@ else
   echo "    acme.json already exists, skipping"
 fi
 
+echo "==> Setting up Home Assistant config directories..."
+mkdir -p "$CONFIG_ROOT/homeassistant"
+mkdir -p "$CONFIG_ROOT/postgres"
+mkdir -p "$CONFIG_ROOT/zigbee2mqtt"
+mkdir -p "$CONFIG_ROOT/mosquitto/data"
+mkdir -p "$CONFIG_ROOT/mosquitto/log"
+
 echo "==> Starting all stacks..."
 docker compose -f "$SCRIPT_DIR/docker-compose.yml" --env-file "$SCRIPT_DIR/.env" up -d
 

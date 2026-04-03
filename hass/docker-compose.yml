@@ -1,0 +1,53 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    network_mode: host
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - mosquitto
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_ROOT}/homeassistant:/config
+      - /run/dbus:/run/dbus:ro
+      - /etc/localtime:/etc/localtime:ro
+
+  postgres:
+    container_name: postgres
+    image: postgres:12
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=docker
+    volumes:
+      - ${CONFIG_ROOT}/postgres:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    restart: unless-stopped
+    volumes:
+      - ${CONFIG_ROOT}/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ${CONFIG_ROOT}/mosquitto/data:/mosquitto/data
+      - ${CONFIG_ROOT}/mosquitto/log:/mosquitto/log
+    ports:
+      - "127.0.0.1:1883:1883"
+      - "127.0.0.1:9001:9001"
+
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_ROOT}/zigbee2mqtt:/app/data
+    devices:
+      - ${ZIGBEE_DEVICE:-/dev/ttyACM0}:/dev/ttyACM0

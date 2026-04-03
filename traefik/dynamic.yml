@@ -1,5 +1,13 @@
 http:
   routers:
+    hass:
+      rule: "Host(`hass.iammikhail.com`)"
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: cloudflare
+      service: hass-svc
+
     nas:
       rule: "Host(`nas.iammikhail.com`)"
       entryPoints:
@@ -9,6 +17,11 @@ http:
       service: nas-svc
 
   services:
+    hass-svc:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:8123"
+
     nas-svc:
       loadBalancer:
         servers:

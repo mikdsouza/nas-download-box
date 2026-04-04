@@ -21,8 +21,10 @@ services:
       - "traefik.http.routers.qbittorrent.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/qbit`)"
       - "traefik.http.routers.qbittorrent.entrypoints=websecure"
       - "traefik.http.routers.qbittorrent.tls.certresolver=cloudflare"
-      - "traefik.http.routers.qbittorrent.middlewares=qbit-strip"
-      - "traefik.http.middlewares.qbit-strip.stripprefix.prefixes=/qbit"
+      - "traefik.http.routers.qbittorrent.middlewares=qbit-slash,qbit-strip"
+      - "traefik.http.middlewares.qbit-slash.redirectregex.regex=^(https?://[^/]+/qbit)$$"
+      - "traefik.http.middlewares.qbit-slash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.qbit-strip.stripprefix.prefixes=/qbit/"
       - "traefik.http.services.qbittorrent.loadbalancer.server.port=7081"
     networks:
       - streaming_net

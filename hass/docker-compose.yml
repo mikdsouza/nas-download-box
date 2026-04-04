@@ -36,8 +36,8 @@ services:
       - ${CONFIG_ROOT}/mosquitto/data:/mosquitto/data
       - ${CONFIG_ROOT}/mosquitto/log:/mosquitto/log
     ports:
-      - "127.0.0.1:1883:1883"
-      - "127.0.0.1:9001:9001"
+      - "1883:1883"
+      - "9001:9001"
 
   zigbee2mqtt:
     container_name: zigbee2mqtt

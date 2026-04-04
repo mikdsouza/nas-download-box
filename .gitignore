@@ -10,6 +10,7 @@
 !hass/config/
 !hass/mosquitto/
 !hass/zigbee2mqtt/
+!flichub/
 !*.conf
 !*.yaml
 !*.html
@@ -19,3 +20,4 @@
 static/*
 !static/dockerfile
 !static/index.html
+!flichub/*.js

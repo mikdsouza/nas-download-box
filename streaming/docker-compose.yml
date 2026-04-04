@@ -13,6 +13,7 @@ services:
       - OPENVPN_USER=${PIA_USERNAME}
       - OPENVPN_PASSWORD=${PIA_PASSWORD}
       - TZ=${TZ}
+      - FIREWALL_INPUT_PORTS=7081
     ports:
       - 7081:7081
       - 6881:6881

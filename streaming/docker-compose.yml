@@ -1,21 +1,22 @@
 services:
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - VPN_SERVICE_PROVIDER=private internet access
+      - VPN_TYPE=openvpn
+      - OPENVPN_USER=${PIA_USERNAME}
+      - OPENVPN_PASSWORD=${PIA_PASSWORD}
       - TZ=${TZ}
-      - WEBUI_PORT=7081
-      - TORRENTING_PORT=6881
-    volumes:
-      - /${CONFIG_ROOT}/qbittorrent:/config
-      - ${MEDIA_ROOT}:/media
     ports:
       - 7081:7081
       - 6881:6881
       - 6881:6881/udp
-    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.qbittorrent.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/qbit`)"
@@ -27,8 +28,29 @@ services:
       - "traefik.http.middlewares.qbit-strip.stripprefix.prefixes=/qbit/"
       - "traefik.http.services.qbittorrent.loadbalancer.server.port=7081"
     networks:
-      - streaming_net
-      - proxy_net
+      streaming_net:
+        aliases:
+          - qbittorrent
+      proxy_net:
+        aliases:
+          - qbittorrent
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "service:gluetun"
+    depends_on:
+      - gluetun
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=7081
+      - TORRENTING_PORT=6881
+    volumes:
+      - /${CONFIG_ROOT}/qbittorrent:/config
+      - ${MEDIA_ROOT}:/media
+    restart: unless-stopped
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -42,8 +64,6 @@ services:
     ports:
       - 9696:9696
     restart: always
-    links:
-      - flaresolverr
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prowlarr.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/prowlarr`)"
@@ -83,8 +103,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${CONFIG_ROOT}/sonarr:/config
       - ${MEDIA_ROOT}:/media
-    links:
-      - qbittorrent
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/sonarr`)"
@@ -109,8 +127,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${CONFIG_ROOT}/lidarr:/config
       - ${MEDIA_ROOT}:/media
-    links:
-      - qbittorrent
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.lidarr.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/lidarr`)"
@@ -135,8 +151,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${CONFIG_ROOT}/radarr:/config
       - ${MEDIA_ROOT}:/media
-    links:
-      - qbittorrent
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/radarr`)"

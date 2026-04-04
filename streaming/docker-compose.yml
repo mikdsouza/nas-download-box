@@ -14,6 +14,7 @@ services:
       - OPENVPN_PASSWORD=${PIA_PASSWORD}
       - TZ=${TZ}
       - FIREWALL_INPUT_PORTS=7081
+      - SERVER_REGIONS=Singapore
     ports:
       - 7081:7081
       - 6881:6881
@@ -28,6 +29,12 @@ services:
       - "traefik.http.middlewares.qbit-slash.redirectregex.replacement=$${1}/"
       - "traefik.http.middlewares.qbit-strip.stripprefix.prefixes=/qbit/"
       - "traefik.http.services.qbittorrent.loadbalancer.server.port=7081"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:9999"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     networks:
       streaming_net:
         aliases:
@@ -41,7 +48,8 @@ services:
     container_name: qbittorrent
     network_mode: "service:gluetun"
     depends_on:
-      - gluetun
+      gluetun:
+        condition: service_healthy
     environment:
       - PUID=${PUID}
       - PGID=${PGID}

@@ -669,7 +669,7 @@ var C = {
     PROTOCOL_LEVEL: 4,
     DEF_PORT: 1883,
     DEF_KEEP_ALIVE: 60, // Default keep_alive (s)
-    PING_INTERVAL: 40 // Ping interval (s), must be less than keep_alive
+    PING_INTERVAL: 10 // Ping interval (s), must be less than keep_alive
 };
 /** Control packet types */ var TYPE = {
     CONNECT: 1,
@@ -1066,6 +1066,7 @@ MQTT.prototype.packetHandler = function(data) {
                 host: mqo.server,
                 port: mqo.port
             }, onConnect);
+            client.setKeepAlive(true, 10000); // TCP keepalive every 10s
             client.on("error", function(err) {
                 self.emit("error", err.message);
             });
@@ -1157,12 +1158,15 @@ MQTT.prototype.packetHandler = function(data) {
     this.client.write(mqttUnsubscribe(topic));
 };
 /** Send ping request to server */ MQTT.prototype.ping = function() {
+    var logger = makeLogger("pinger");
+    logger.info('Sending ping')
     if (!this.client) return;
     try {
         this.client.write(Buffer.from([
             TYPE.PINGREQ << 4,
             0
         ]));
+        logger.info('Sent ping')
     } catch (e) {
         this._scktClosed();
     }

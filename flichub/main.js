@@ -3,7 +3,7 @@ require("./lib").start(
  require("ir"),
  {
   mqtt: {
-   host: "hass.iammikhail.com"
+   host: "hassiot.iammikhail.com"
   }
  }
 )

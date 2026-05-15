@@ -5,13 +5,10 @@ mqtt:
   server: mqtt://mosquitto
 serial:
   adapter: zstack
-  port: /dev/ttyACM0
+  port: /dev/ttyUSB0
 devices:
   '0x0017880104e57719':
     friendly_name: hue-dimmer-1
-    retain: false
-  '0xccccccfffe013401':
-    friendly_name: tradfri-remote-1
     retain: false
   '0x842e14fffe4db45a':
     friendly_name: tradfri-on-off-1
@@ -23,6 +20,12 @@ devices:
   '0xa4c138bbd6349413':
     friendly_name: freezer-temp
   '0x10359700008a8f8d':
-    friendly_name: 'bilresa-on-off-1'
+    friendly_name: bilresa-on-off-1
+  '0xccccccfffe013401':
+    friendly_name: tradfri-remote-1
+  '0x3ccfb452157b9b08':
+    friendly_name: grillplats-on-off-1
+  '0x70c59cfffee75120':
+    friendly_name: 'tretakt-on-off-1'
 version: 5
 permit_join: false

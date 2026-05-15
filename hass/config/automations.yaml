@@ -67,11 +67,11 @@
     entity_id: cfa142c48919570a352dea0cc9cdbbec
     domain: light
   actions:
-  - action: scene.turn_on
+  - action: light.turn_off
     metadata: {}
-    data: {}
     target:
-      entity_id: scene.cozy_living_duplicate
+      entity_id: light.cozy_living_lights
+    data: {}
   mode: single
 - id: '1736479394923'
   alias: Tradfri up screen off
@@ -93,80 +93,6 @@
   - action: script.tv_screen_off
     metadata: {}
     data: {}
-  mode: single
-- id: '1737778746577'
-  alias: Close living room blinds when on button is pressed
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: d7e5110eab4a66db60855e83b8ef10ba
-    type: action
-    subtype: 'on'
-    trigger: device
-  conditions:
-  - condition: not
-    conditions:
-    - condition: state
-      entity_id: cover.living_room_blinds
-      state: closing
-  actions:
-  - action: cover.close_cover
-    target:
-      entity_id:
-      - cover.living_room_blinds
-    data: {}
-  mode: single
-- id: '1737778799346'
-  alias: Open living room blinds when off is pressed
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: d7e5110eab4a66db60855e83b8ef10ba
-    type: action
-    subtype: 'off'
-    trigger: device
-  conditions:
-  - condition: not
-    conditions:
-    - condition: state
-      entity_id: cover.living_room_blinds
-      state: opening
-  actions:
-  - action: cover.open_cover
-    target:
-      entity_id:
-      - cover.living_room_blinds
-    data: {}
-  mode: single
-- id: '1737779232490'
-  alias: Stop living room blinds if they are moving and a button is pressed
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: d7e5110eab4a66db60855e83b8ef10ba
-    type: action
-    subtype: 'on'
-    trigger: device
-  - domain: mqtt
-    device_id: d7e5110eab4a66db60855e83b8ef10ba
-    type: action
-    subtype: 'off'
-    trigger: device
-  conditions:
-  - condition: or
-    conditions:
-    - condition: state
-      entity_id: cover.living_room_blinds
-      state: opening
-    - condition: state
-      entity_id: cover.living_room_blinds
-      state: closing
-  actions:
-  - action: cover.stop_cover
-    metadata: {}
-    data: {}
-    target:
-      entity_id: cover.living_room_blinds
   mode: single
 - id: '1737969356627'
   alias: Entrace button click toggles hallway light
@@ -470,4 +396,39 @@
     domain: cover
     entity_id: fc100802be137890abb640eabbf48d7a
     type: close
+  mode: single
+- id: '1778819767094'
+  alias: Turn on kitchen island working scene
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d7e5110eab4a66db60855e83b8ef10ba
+    type: action
+    subtype: 'on'
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.kitchen_island_working_scene
+    data: {}
+  mode: single
+- id: '1778819859885'
+  alias: Turn on kitchen island eating scene
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d7e5110eab4a66db60855e83b8ef10ba
+    type: action
+    subtype: 'off'
+    trigger: device
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.kitchen_island_eating_scene
+    data: {}
   mode: single

@@ -1,118 +1,14 @@
 - id: '1734090117367'
   name: Cozy living
   entities:
-    light.on_off_plug_1:
-      supported_color_modes:
-      - onoff
-      color_mode: onoff
-      mode: normal
-      dynamics: none
-      friendly_name: Showcase
-      supported_features: 0
-      state: 'on'
-    light.bedroom_ceiling:
-      min_color_temp_kelvin: 1500
-      max_color_temp_kelvin: 9000
-      min_mireds: 111
-      max_mireds: 666
-      effect_list:
-      - effect_colorloop
-      - effect_pulse
-      - effect_stop
-      supported_color_modes:
-      - color_temp
-      - hs
-      effect:
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Living 1
-      supported_features: 36
-      state: 'off'
-    light.lamp:
-      min_color_temp_kelvin: 1500
-      max_color_temp_kelvin: 9000
-      min_mireds: 111
-      max_mireds: 666
-      effect_list:
-      - effect_colorloop
-      - effect_pulse
-      - effect_stop
-      supported_color_modes:
-      - color_temp
-      - hs
-      effect:
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Living 2
-      supported_features: 36
-      state: 'off'
-    light.living_ceiling:
-      min_color_temp_kelvin: 1500
-      max_color_temp_kelvin: 9000
-      min_mireds: 111
-      max_mireds: 666
-      effect_list:
-      - effect_colorloop
-      - effect_pulse
-      - effect_stop
-      supported_color_modes:
-      - color_temp
-      - hs
-      effect:
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Living 3
-      supported_features: 36
-      state: 'off'
-    light.mushroom:
-      min_color_temp_kelvin: 1500
-      max_color_temp_kelvin: 9000
-      min_mireds: 111
-      max_mireds: 666
-      effect_list:
-      - effect_colorloop
-      - effect_pulse
-      - effect_stop
-      supported_color_modes:
-      - color_temp
-      - hs
-      effect:
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Living 4
-      supported_features: 36
-      state: 'off'
     light.color_temperature_light_1_2:
       min_color_temp_kelvin: 2202
       max_color_temp_kelvin: 4000
-      min_mireds: 250
-      max_mireds: 454
       supported_color_modes:
       - color_temp
       color_mode: color_temp
       brightness: 230
       color_temp_kelvin: 2570
-      color_temp: 389
       hs_color:
       - 28.696
       - 70.045
@@ -128,131 +24,88 @@
       friendly_name: Lamp
       supported_features: 40
       state: 'on'
+    light.study_shelf:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 2161
+      hs_color:
+      - 29.94
+      - 86.438
+      rgb_color:
+      - 255
+      - 145
+      - 35
+      xy_color:
+      - 0.582
+      - 0.388
+      friendly_name: Mushroom
+      supported_features: 36
+      state: 'on'
   icon: mdi:sofa
   metadata: {}
 - id: '1734090485792'
   name: All living room lights off
   entities:
-    light.on_off_plug_1:
-      supported_color_modes:
-      - onoff
-      color_mode:
-      mode: normal
-      dynamics: none
-      friendly_name: Showcase
-      supported_features: 0
-      state: 'off'
-    light.bedroom_ceiling:
-      min_color_temp_kelvin: 1500
-      max_color_temp_kelvin: 9000
-      min_mireds: 111
-      max_mireds: 666
-      effect_list:
-      - effect_colorloop
-      - effect_pulse
-      - effect_stop
-      supported_color_modes:
-      - color_temp
-      - hs
-      effect:
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Living 1
-      supported_features: 36
-      state: 'off'
-    light.lamp:
-      min_color_temp_kelvin: 1500
-      max_color_temp_kelvin: 9000
-      min_mireds: 111
-      max_mireds: 666
-      effect_list:
-      - effect_colorloop
-      - effect_pulse
-      - effect_stop
-      supported_color_modes:
-      - color_temp
-      - hs
-      effect:
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Living 2
-      supported_features: 36
-      state: 'off'
-    light.living_ceiling:
-      min_color_temp_kelvin: 1500
-      max_color_temp_kelvin: 9000
-      min_mireds: 111
-      max_mireds: 666
-      effect_list:
-      - effect_colorloop
-      - effect_pulse
-      - effect_stop
-      supported_color_modes:
-      - color_temp
-      - hs
-      effect:
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Living 3
-      supported_features: 36
-      state: 'off'
-    light.mushroom:
-      min_color_temp_kelvin: 1500
-      max_color_temp_kelvin: 9000
-      min_mireds: 111
-      max_mireds: 666
-      effect_list:
-      - effect_colorloop
-      - effect_pulse
-      - effect_stop
-      supported_color_modes:
-      - color_temp
-      - hs
-      effect:
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
-      hs_color:
-      rgb_color:
-      xy_color:
-      friendly_name: Living 4
-      supported_features: 36
-      state: 'off'
     light.color_temperature_light_1_2:
       min_color_temp_kelvin: 2202
       max_color_temp_kelvin: 4000
-      min_mireds: 250
-      max_mireds: 454
       supported_color_modes:
       - color_temp
-      color_mode:
-      brightness:
-      color_temp_kelvin:
-      color_temp:
+      color_mode: color_temp
+      brightness: 230
+      color_temp_kelvin: 2570
       hs_color:
+      - 28.696
+      - 70.045
       rgb_color:
+      - 255
+      - 162
+      - 76
       xy_color:
+      - 0.539
+      - 0.389
       mode: normal
       dynamics: none
       friendly_name: Lamp
       supported_features: 40
-      state: 'off'
+      state: 'on'
+    light.study_shelf:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 2161
+      hs_color:
+      - 29.94
+      - 86.438
+      rgb_color:
+      - 255
+      - 145
+      - 35
+      xy_color:
+      - 0.582
+      - 0.388
+      friendly_name: Mushroom
+      supported_features: 36
+      state: 'on'
   icon: mdi:sofa
   metadata: {}
 - id: '1734428729779'
@@ -319,35 +172,6 @@
       supported_features: 36
       state: 'on'
   icon: mdi:silverware
-  metadata: {}
-- id: '1737942775728'
-  name: No glare on tv
-  entities:
-    cover.living_room_door:
-      current_position: 28
-      device_class: shade
-      friendly_name: Living room door
-      supported_features: 15
-      state: open
-    cover.living_room_left:
-      current_position: 0
-      device_class: shade
-      friendly_name: Living Room left
-      supported_features: 15
-      state: closed
-    cover.living_room_right:
-      current_position: 0
-      device_class: shade
-      friendly_name: Living Room right
-      supported_features: 15
-      state: closed
-    cover.tv_window:
-      current_position: 0
-      device_class: shade
-      friendly_name: TV window
-      supported_features: 15
-      state: closed
-  icon: mdi:television
   metadata: {}
 - id: '1739523678024'
   name: Night TV
@@ -839,3 +663,175 @@
       state: 'on'
   icon: mdi:briefcase
   metadata: {}
+- id: '1778755428888'
+  name: Kitchen island eating scene
+  entities:
+    light.lamp:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 173
+      color_temp_kelvin: 2665
+      hs_color:
+      - 28.473
+      - 66.853
+      rgb_color:
+      - 255
+      - 165
+      - 85
+      xy_color:
+      - 0.529
+      - 0.387
+      friendly_name: Kitchen Island 1
+      supported_features: 36
+      state: 'on'
+    light.mushroom:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 173
+      color_temp_kelvin: 2665
+      hs_color:
+      - 28.473
+      - 66.853
+      rgb_color:
+      - 255
+      - 165
+      - 85
+      xy_color:
+      - 0.529
+      - 0.387
+      friendly_name: Kitchen Island 2
+      supported_features: 36
+      state: 'on'
+    light.living_ceiling:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 173
+      color_temp_kelvin: 2665
+      hs_color:
+      - 28.473
+      - 66.853
+      rgb_color:
+      - 255
+      - 165
+      - 85
+      xy_color:
+      - 0.529
+      - 0.387
+      friendly_name: Kitchen Island 3
+      supported_features: 36
+      state: 'on'
+  metadata: {}
+  icon: mdi:food-turkey
+- id: '1778819723652'
+  name: Kitchen island working scene
+  entities:
+    light.lamp:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 3000
+      hs_color:
+      - 27.825
+      - 56.895
+      rgb_color:
+      - 255
+      - 177
+      - 110
+      xy_color:
+      - 0.496
+      - 0.383
+      friendly_name: Kitchen Island 1
+      supported_features: 36
+      state: 'on'
+    light.mushroom:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 3000
+      hs_color:
+      - 27.825
+      - 56.895
+      rgb_color:
+      - 255
+      - 177
+      - 110
+      xy_color:
+      - 0.496
+      - 0.383
+      friendly_name: Kitchen Island 2
+      supported_features: 36
+      state: 'on'
+    light.living_ceiling:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 3000
+      hs_color:
+      - 27.825
+      - 56.895
+      rgb_color:
+      - 255
+      - 177
+      - 110
+      xy_color:
+      - 0.496
+      - 0.383
+      friendly_name: Kitchen Island 3
+      supported_features: 36
+      state: 'on'
+  metadata: {}
+  icon: mdi:food-turkey

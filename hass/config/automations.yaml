@@ -407,13 +407,24 @@
     subtype: 'on'
     metadata: {}
     trigger: device
-  conditions: []
+  conditions:
+  - condition: or
+    conditions:
+    - condition: numeric_state
+      entity_id: light.kitchen_island
+      attribute: brightness
+      below: 250
+    - condition: state
+      entity_id: light.kitchen_island
+      state:
+      - 'off'
   actions:
   - action: scene.turn_on
     metadata: {}
     target:
       entity_id: scene.kitchen_island_working_scene
-    data: {}
+    data:
+      transition: 0.5
   mode: single
 - id: '1778819859885'
   alias: Turn on kitchen island eating scene
@@ -424,11 +435,71 @@
     type: action
     subtype: 'off'
     trigger: device
-  conditions: []
+  conditions:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: light.kitchen_island
+      state:
+      - 'off'
+    - condition: numeric_state
+      entity_id: light.kitchen_island
+      above: 250
+      attribute: brightness
   actions:
   - action: scene.turn_on
     metadata: {}
     target:
       entity_id: scene.kitchen_island_eating_scene
+    data:
+      transition: 0.5
+  mode: single
+- id: '1778820264665'
+  alias: Turn off kitchen island with on press
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d7e5110eab4a66db60855e83b8ef10ba
+    type: action
+    subtype: 'on'
+    metadata: {}
+    trigger: device
+  conditions:
+  - condition: numeric_state
+    entity_id: light.kitchen_island
+    attribute: brightness
+    above: 250
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.kitchen_island
+    data: {}
+  mode: single
+- id: '1778823090463'
+  alias: Turn off kitchen island lights with off press
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d7e5110eab4a66db60855e83b8ef10ba
+    type: action
+    subtype: 'off'
+    trigger: device
+  conditions:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: light.kitchen_island
+      state:
+      - 'on'
+    - condition: numeric_state
+      entity_id: light.kitchen_island
+      attribute: brightness
+      below: 250
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.kitchen_island
     data: {}
   mode: single

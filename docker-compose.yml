@@ -2,6 +2,7 @@ include:
   - streaming/docker-compose.yml
   - network/docker-compose.yml
   - hass/docker-compose.yml
+  - 3dprint/docker-compose.yml
 
 services:
   watchtower:

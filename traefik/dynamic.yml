@@ -8,6 +8,14 @@ http:
         certResolver: cloudflare
       service: hass-svc
 
+    bambuddy:
+      rule: "Host(`bambuddy.iammikhail.com`)"
+      entryPoints:
+        - websecure
+      tls:
+        certResolver: cloudflare
+      service: bambuddy-svc
+
     nas:
       rule: "Host(`nas.iammikhail.com`)"
       entryPoints:
@@ -21,6 +29,11 @@ http:
       loadBalancer:
         servers:
           - url: "http://host.docker.internal:8123"
+
+    bambuddy-svc:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:8000"
 
     nas-svc:
       loadBalancer:

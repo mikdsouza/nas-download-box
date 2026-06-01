@@ -167,78 +167,6 @@
         - sensor.adriana_orlands_iphone_battery_level
         - sensor.tab_s6_battery_level
         - sensor.sm_s921b_battery_level
-- id: '1738661454583'
-  alias: Close bedroom blinds on "on" press
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: e07a5eef39531396fc3b8947662ee588
-    type: action
-    subtype: 'on'
-    trigger: device
-  conditions:
-  - condition: not
-    conditions:
-    - condition: state
-      entity_id: cover.bedroom_blinds
-      state: closing
-  actions:
-  - action: cover.close_cover
-    data: {}
-    target:
-      entity_id: cover.bedroom_blinds
-  mode: single
-- id: '1738661515176'
-  alias: Open bedroom blings on "off" press
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: e07a5eef39531396fc3b8947662ee588
-    type: action
-    subtype: 'off'
-    trigger: device
-  conditions:
-  - condition: not
-    conditions:
-    - condition: state
-      entity_id: cover.bedroom_blinds
-      state: opening
-  actions:
-  - action: cover.open_cover
-    data: {}
-    target:
-      entity_id: cover.bedroom_blinds
-  mode: single
-- id: '1738661590475'
-  alias: Stop moving bedroom blinds when a button is pressed
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: e07a5eef39531396fc3b8947662ee588
-    type: action
-    subtype: 'on'
-    trigger: device
-  - domain: mqtt
-    device_id: e07a5eef39531396fc3b8947662ee588
-    type: action
-    subtype: 'off'
-    trigger: device
-  conditions:
-  - condition: or
-    conditions:
-    - condition: state
-      entity_id: cover.bedroom_blinds
-      state: opening
-    - condition: state
-      entity_id: cover.bedroom_blinds
-      state: closing
-  actions:
-  - action: cover.stop_cover
-    metadata: {}
-    data: {}
-    target:
-      entity_id: cover.bedroom_blinds
-  mode: single
 - id: '1742807725788'
   alias: Cycle through mik's study scenes
   description: ''
@@ -364,39 +292,6 @@
     metadata: {}
     data: {}
   mode: single
-- id: '1770452221852'
-  alias: Open TV window blind
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: d5e8fac2a6480a4b7206a78f4d631ff4
-    type: action
-    subtype: 'off'
-    metadata: {}
-    trigger: device
-  conditions: []
-  actions:
-  - device_id: a3617535c0ad89c348dbf1ea30d273e2
-    domain: cover
-    entity_id: fc100802be137890abb640eabbf48d7a
-    type: open
-  mode: single
-- id: '1770452248370'
-  alias: Close TV Window Blind
-  description: ''
-  triggers:
-  - domain: mqtt
-    device_id: d5e8fac2a6480a4b7206a78f4d631ff4
-    type: action
-    subtype: 'on'
-    trigger: device
-  conditions: []
-  actions:
-  - device_id: a3617535c0ad89c348dbf1ea30d273e2
-    domain: cover
-    entity_id: fc100802be137890abb640eabbf48d7a
-    type: close
-  mode: single
 - id: '1778819767094'
   alias: Turn on kitchen island working scene
   description: ''
@@ -501,5 +396,74 @@
     metadata: {}
     target:
       entity_id: light.kitchen_island
+    data: {}
+  mode: single
+- id: '1780124050258'
+  alias: Turn off cozy living with on button
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d5e8fac2a6480a4b7206a78f4d631ff4
+    type: action
+    subtype: 'on'
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.cozy_living_lights
+    data: {}
+  mode: single
+- id: '1780124113901'
+  alias: Turn on cozy living with off press
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: d5e8fac2a6480a4b7206a78f4d631ff4
+    type: action
+    subtype: 'off'
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.cozy_living_lights
+    data: {}
+  mode: single
+- id: '1780269200487'
+  alias: Toggle kitchen lights with off press
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: e07a5eef39531396fc3b8947662ee588
+    type: action
+    subtype: 'off'
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    target:
+      entity_id: light.kitchen_island
+    data: {}
+  mode: single
+- id: '1780269253401'
+  alias: Toggle cozy lights with on press
+  description: ''
+  triggers:
+  - domain: mqtt
+    device_id: e07a5eef39531396fc3b8947662ee588
+    type: action
+    subtype: 'on'
+    metadata: {}
+    trigger: device
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    target:
+      entity_id: light.cozy_living_lights
     data: {}
   mode: single

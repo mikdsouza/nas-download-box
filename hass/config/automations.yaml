@@ -469,3 +469,33 @@
       entity_id: light.cozy_living_lights
     data: {}
   mode: single
+- id: '1780915435996'
+  alias: Toggle cozy lights with off press
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - event.bilresa_dual_button_button_1
+  conditions: []
+  actions:
+  - action: light.toggle
+    metadata: {}
+    target:
+      entity_id: light.cozy_living_lights
+    data: {}
+  mode: single
+- id: '1780915478150'
+  alias: Turn on cozy lights with on press
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - event.bilresa_dual_button_button_2
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.cozy_living_lights
+    data: {}
+  mode: single

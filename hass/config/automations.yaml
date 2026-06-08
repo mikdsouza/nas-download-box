@@ -499,3 +499,34 @@
       entity_id: light.cozy_living_lights
     data: {}
   mode: single
+- id: '1780923781254'
+  alias: ' turn on cosy lights when doors opened after sunset'
+  description: ''
+  triggers:
+  - device_id: 9ad00ba3f4bbc181ce854e2dc97afa6f
+    domain: lock
+    entity_id: 518ac62b76eeacf819fa50305607a6f6
+    type: unlocked
+    trigger: device
+  conditions:
+  - condition: state
+    entity_id: light.cozy_living_lights
+    state:
+    - 'off'
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  - condition: sun
+    after: sunset
+    after_offset:
+      hours: 0
+      minutes: 15
+      seconds: 0
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.cozy_living_lights
+    data: {}
+  mode: single

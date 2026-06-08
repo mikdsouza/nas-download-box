@@ -44,6 +44,9 @@ homeassistant:
     - type: homeassistant
   unit_system: metric
   time_zone: !secret timezone
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
   currency: !secret currency
   country: !secret country
 

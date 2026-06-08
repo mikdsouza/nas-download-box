@@ -19,8 +19,6 @@ devices:
     friendly_name: fridge-temp
   '0xa4c138bbd6349413':
     friendly_name: freezer-temp
-  '0x10359700008a8f8d':
-    friendly_name: bilresa-on-off-1
   '0xccccccfffe013401':
     friendly_name: tradfri-remote-1
   '0x3ccfb452157b9b08':

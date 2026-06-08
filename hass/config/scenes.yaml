@@ -1,29 +1,6 @@
 - id: '1734090117367'
   name: Cozy living
   entities:
-    light.color_temperature_light_1_2:
-      min_color_temp_kelvin: 2202
-      max_color_temp_kelvin: 4000
-      supported_color_modes:
-      - color_temp
-      color_mode: color_temp
-      brightness: 230
-      color_temp_kelvin: 2570
-      hs_color:
-      - 28.696
-      - 70.045
-      rgb_color:
-      - 255
-      - 162
-      - 76
-      xy_color:
-      - 0.539
-      - 0.389
-      mode: normal
-      dynamics: none
-      friendly_name: Lamp
-      supported_features: 40
-      state: 'on'
     light.study_shelf:
       min_color_temp_kelvin: 1500
       max_color_temp_kelvin: 9000
@@ -49,6 +26,33 @@
       - 0.582
       - 0.388
       friendly_name: Mushroom
+      supported_features: 36
+      state: 'on'
+    light.lamp_2:
+      min_color_temp_kelvin: 1500
+      max_color_temp_kelvin: 9000
+      effect_list:
+      - effect_colorloop
+      - effect_pulse
+      - effect_stop
+      supported_color_modes:
+      - color_temp
+      - hs
+      effect:
+      color_mode: color_temp
+      brightness: 255
+      color_temp_kelvin: 2511
+      hs_color:
+      - 28.846
+      - 72.125
+      rgb_color:
+      - 255
+      - 160
+      - 71
+      xy_color:
+      - 0.545
+      - 0.39
+      friendly_name: Lamp
       supported_features: 36
       state: 'on'
   icon: mdi:sofa

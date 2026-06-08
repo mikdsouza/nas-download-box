@@ -115,9 +115,10 @@ turn_off_truman_s_light_after_1_minute:
       minutes: 1
       seconds: 0
       milliseconds: 0
-  - type: turn_off
-    device_id: b9c2a89fed0cbf5660b107498e3c4b05
-    entity_id: 12411d3043e96637e881684de0e8eb86
-    domain: light
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.truman_chamber_light
+    data: {}
   alias: Turn off Truman's light after 1 minute
   description: ''

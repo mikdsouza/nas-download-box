@@ -33,11 +33,10 @@
     subtype: button_1
     trigger: device
   conditions:
-  - condition: device
-    type: is_off
-    device_id: be45e0972f92edc1f37334745898a14f
-    entity_id: cfa142c48919570a352dea0cc9cdbbec
-    domain: light
+  - condition: state
+    entity_id: light.lamp_2
+    state:
+    - 'off'
   actions:
   - action: scene.turn_on
     metadata: {}
@@ -61,11 +60,10 @@
     subtype: button_1
     trigger: device
   conditions:
-  - condition: device
-    type: is_on
-    device_id: be45e0972f92edc1f37334745898a14f
-    entity_id: cfa142c48919570a352dea0cc9cdbbec
-    domain: light
+  - condition: state
+    entity_id: light.lamp_2
+    state:
+    - 'on'
   actions:
   - action: light.turn_off
     metadata: {}
@@ -278,11 +276,15 @@
   alias: Print stopped
   description: ''
   triggers:
-  - device_id: b9c2a89fed0cbf5660b107498e3c4b05
+  - device_id: 9169044aeeb1bb35a7c4f26f3186f197
+    domain: bambu_lab
+    type: event_print_failed
+    trigger: device
+  - device_id: 9169044aeeb1bb35a7c4f26f3186f197
     domain: bambu_lab
     type: event_print_finished
     trigger: device
-  - device_id: b9c2a89fed0cbf5660b107498e3c4b05
+  - device_id: 9169044aeeb1bb35a7c4f26f3186f197
     domain: bambu_lab
     type: event_print_canceled
     trigger: device

@@ -51,3 +51,35 @@ services:
       - ./zigbee2mqtt:/app/data
     devices:
       - ${ZIGBEE_DEVICE:-/dev/ttyUSB0}:/dev/ttyUSB0
+
+  matter-server:
+    container_name: matter-server
+    image: ghcr.io/home-assistant-libs/python-matter-server:stable
+    network_mode: host
+    restart: unless-stopped
+    command: --storage-path /data --paa-root-cert-dir /data/credentials --primary-interface enp2s0.10
+    volumes:
+      - ${CONFIG_ROOT}/matter-server:/data
+      - /run/dbus:/run/dbus:ro
+
+  otbr:
+    container_name: otbr
+    image: openthread/border-router:latest
+    network_mode: host
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - TZ=${TZ}
+      - OT_RCP_DEVICE=spinel+hdlc+uart://${THREAD_DEVICE:-/dev/ttyUSB0}?uart-baudrate=460800
+      - OT_INFRA_IF=${OTBR_BACKBONE_IF:-enp2s0.10}
+      - OT_THREAD_IF=wpan0
+      - OT_REST_LISTEN_ADDR=0.0.0.0
+      - OT_REST_LISTEN_PORT=8087
+      - OT_WEB_LISTEN_PORT=8086
+      - OT_LOG_LEVEL=7
+    volumes:
+      - ${CONFIG_ROOT}/otbr:/data
+      - /run/dbus:/run/dbus
+    devices:
+      - ${THREAD_DEVICE:-/dev/ttyUSB0}:/dev/ttyUSB0
+      - /dev/net/tun:/dev/net/tun

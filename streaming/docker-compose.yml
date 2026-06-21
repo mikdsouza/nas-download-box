@@ -216,6 +216,14 @@ services:
       - "traefik.http.routers.jellyfin.entrypoints=websecure"
       - "traefik.http.routers.jellyfin.tls.certresolver=cloudflare"
       - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+      - "traefik.http.routers.jellyfin-root.rule=Host(`jellyfin.iammikhail.com`)"
+      - "traefik.http.routers.jellyfin-root.entrypoints=websecure"
+      - "traefik.http.routers.jellyfin-root.tls.certresolver=cloudflare"
+      - "traefik.http.routers.jellyfin-root.middlewares=jellyfin-root-redirect"
+      - "traefik.http.routers.jellyfin-root.service=jellyfin"
+      - "traefik.http.middlewares.jellyfin-root-redirect.redirectregex.regex=^https://jellyfin\\.iammikhail\\.com(/?)$$"
+      - "traefik.http.middlewares.jellyfin-root-redirect.redirectregex.replacement=https://jellyfin.iammikhail.com/jellyfin"
+      - "traefik.http.middlewares.jellyfin-root-redirect.redirectregex.permanent=true"
     networks:
       - streaming_net
       - proxy_net

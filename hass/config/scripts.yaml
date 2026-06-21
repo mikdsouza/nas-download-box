@@ -117,8 +117,8 @@ turn_off_truman_s_light_after_1_minute:
       milliseconds: 0
   - action: light.turn_off
     metadata: {}
-    target:
-      entity_id: light.truman_chamber_light
     data: {}
+    target:
+      entity_id: light.p1s_01p00c5c0103269_chamber_light
   alias: Turn off Truman's light after 1 minute
   description: ''

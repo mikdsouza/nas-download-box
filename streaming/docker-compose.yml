@@ -212,7 +212,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jellyfin.rule=Host(`downloads.iammikhail.com`) && PathPrefix(`/jellyfin`)"
+      - "traefik.http.routers.jellyfin.rule=(Host(`downloads.iammikhail.com`) || Host(`jellyfin.iammikhail.com`)) && PathPrefix(`/jellyfin`)"
       - "traefik.http.routers.jellyfin.entrypoints=websecure"
       - "traefik.http.routers.jellyfin.tls.certresolver=cloudflare"
       - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"

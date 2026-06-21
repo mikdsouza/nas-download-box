@@ -276,17 +276,17 @@
   alias: Print stopped
   description: ''
   triggers:
-  - device_id: 9169044aeeb1bb35a7c4f26f3186f197
+  - device_id: b9c2a89fed0cbf5660b107498e3c4b05
     domain: bambu_lab
-    type: event_print_failed
+    type: event_print_canceled
     trigger: device
-  - device_id: 9169044aeeb1bb35a7c4f26f3186f197
+  - device_id: b9c2a89fed0cbf5660b107498e3c4b05
     domain: bambu_lab
     type: event_print_finished
     trigger: device
-  - device_id: 9169044aeeb1bb35a7c4f26f3186f197
+  - device_id: b9c2a89fed0cbf5660b107498e3c4b05
     domain: bambu_lab
-    type: event_print_canceled
+    type: event_print_error
     trigger: device
   conditions: []
   actions:

@@ -24,6 +24,8 @@ devices:
   '0x3ccfb452157b9b08':
     friendly_name: grillplats-on-off-1
   '0x70c59cfffee75120':
-    friendly_name: 'tretakt-on-off-1'
+    friendly_name: tretakt-on-off-1
+  '0x10359700008a8f8d':
+    friendly_name: '0x10359700008a8f8d'
 version: 5
 permit_join: false

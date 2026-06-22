@@ -9,9 +9,14 @@ services:
       - mosquitto
     environment:
       - TZ=${TZ}
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    devices:
+      - /dev/rfkill:/dev/rfkill
     volumes:
       - ./config:/config
-      - /run/dbus:/run/dbus:ro
+      - /run/dbus:/run/dbus
       - /etc/localtime:/etc/localtime:ro
 
   postgres:
@@ -70,7 +75,7 @@ services:
     privileged: true
     environment:
       - TZ=${TZ}
-      - OT_RCP_DEVICE=spinel+hdlc+uart://${THREAD_DEVICE:-/dev/ttyUSB0}?uart-baudrate=460800
+      - OT_RCP_DEVICE=spinel+hdlc+uart:///dev/ttyUSB0?uart-baudrate=460800
       - OT_INFRA_IF=${OTBR_BACKBONE_IF:-enp2s0.10}
       - OT_THREAD_IF=wpan0
       - OT_REST_LISTEN_ADDR=0.0.0.0
